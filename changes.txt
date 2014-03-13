@@ -1,0 +1,45 @@
+2.0.9
+* Changed: Force(s) GUI and attributes
+* Added: Example Magnet scene
+* Improved: updateConstraints()
+* Added: "Static" parameter to btBuild RBDs tab
+* Added: "Update every frame" parameter to btBuild RBDs tab
+* Added: auto-update mass of compound object from child(s) mass
+* Added: Example Voronoi compound(cluster) scene
+* Added: New node "btExtraCells" which optimalize creating high&low poly pieces
+* Fixed: Problem when Houdini cook SOP_Loader node more than once on same frame
+* Fixed: Crash when Constraint includes "index of object" which doesn't exist
+* Added: "Ground Plane" option(animated) on btSolver Node
+* Changed: Rename "Geometry" => "Shapes"
+* Changed: Rename "Properties" => "Physics Properties"
+* Added: Emitting system
+
+
+2.0.10
+* Added: Icons
+* Fixed: UI range of parameters
+* Changed: btTransform -> "Output" options from(Prefer High, High, Low, Both) to (Prefer Original, Original, Collision, Both)
+* Changed: btPrepare -> Decomposition::Tetra::"Number of ray steps" -> "Precision" - higher value means accurate(slower)
+* Fixed: Problem with btSolver::Output::Zero which didn't work
+* Fixed: btTransform "Delete without objs properties" with zero input_1
+* Added: Constraint recreate option
+* Added: Constraint Reset Equilibrium option
+* Fixed: Static Compound
+* Added: btTransform "Missing Velocity attribute" error message
+* Fixed: Situation when btSolver doesn't delete constraint(s) in bullet world
+* Fixed: Moving with static objects which have'nt zero init rotation(bt_cog_r attribute)
+* Fixed: Cases when you hit "ESC" key for interuption and Houdini won't update graph
+* Added: Balloons scene
+* Added: House Destruction scene
+* Added: Running on Bullet Library v2.82
+* Added: btMLCPSolver constraint solver(slower, but more stable results)
+
+
+2.0.11
+* Fixed: Generating constraints algorithm creates constraint between objects with same compound(parent) object
+* Fixed: btPrepare generates tetra form polygon which area is less than 0.001
+* Added: Object "Recreate" option which reupdate object(shape+properties) to solver
+* Fixed: Smooth static object recreate transformation
+* Added: btSolver "Share Shapes" option for Boxes/Spheres - saving memory
+* Improved: Source code has cleaner code(std::vector => MyVec, ...)
+* Improved: Faster Forces uploading

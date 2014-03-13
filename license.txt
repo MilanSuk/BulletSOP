@@ -1,0 +1,81 @@
+BulletSOP
+Software License Agreement
+
+This Software License Agreement (this "Agreement") is between you (either an individual or an entity, referred to hereinafter as "you" or "your") and Milan Suk.
+
+By copying, installing, downloading, or using all or any portion of the Software, you accept all the terms and conditions of this Agreement. Milan Suk owns all intellectual property in the Software. If you do not agree to the terms of this Agreement, do not use the Software. This Agreement is enforceable against you and any legal entity that obtained the Software and on whose behalf it is used.
+
+
+1. Software License.
+
+1.1 Limited Use. You may not transfer, rent, sublicense, assign, lease, loan, resell for profit, redistribute, encumber, publish or otherwise share the Software (or related materials based upon the Software or any part thereof) without the prior written consent of Milan Suk. You must not use the Software other than as permitted by the License or in a manner inconsistent with its design and Documentation.
+
+1.2 Notices. The Software must contain Milan Suk copyright and other proprietary notices that appear on or in the Software, unless a Branding Free License is purchased.
+
+1.3 Illegal Activity. You may not use the Software to engage in or allow others to engage in any illegal activity where the Software is accessed and/or used. You may not use the Software to engage in any activity that will violate the rights of third parties, including, without limitation, through the use, public display, public performance, reproduction, distribution, or modification of communications or materials that infringe copyrights, trademarks, publicity rights, privacy rights, other proprietary rights, or rights against defamation of third parties.
+
+1.4 Need for Content licenses. The License provides no rights with respect to any content that may be reproduced, encoded, distributed, transmitted, performed, or otherwise used in connection with the Software. You are responsible for ensuring that any content is properly used in accordance with applicable laws and the rights of any third party with respect to such content.
+
+1.5 Modification of the Code. You may modify the Software source code; provided, however, you may not rent, sublicense, assign, lease, loan, resell for profit, distribute, publish or otherwise share the Software or related materials or derivative works based upon the Software or any part thereof without the prior written consent of Milan Suk.
+
+1.6 Updates. "Update(s)" will mean the release of a version of the Software containing improvements, corrections, modifications, alterations, revisions, extensions, language versions, and/or enhancements to the Software and/or Documentation made during the term of this Agreement. The change to an Update will be recognized by an increase in value of number to the right of a decimal point (e.g., version 2.0 to be replaced by version 2.1).
+
+
+
+2. Intellectual Property Ownership, Reservation of Rights.
+
+The Software and any authorized copies that you make are the intellectual property of and are owned by Milan Suk. The structure, organization, arrangement and source code of the Software are the valuable trade secrets and confidential information of Milan Suk. The Software is protected by law, including but not limited to the copyright laws of the United States and other countries, and by international treaty provisions. Except as expressly stated herein, this Agreement does not grant you any intellectual property rights in the Software and all rights not expressly granted are reserved by Milan Suk. 
+
+
+
+3. Representations.
+
+You represent and warrant that you have the legal capacity to enter into this Agreement, that you will use the Software only for lawful purposes and in accordance with this Agreement, and that you will not use the Software to violate any law, regulation or ordinance or any right of Milan Suk or any third party, including without limitation, any right of privacy, publicity, copyright, trademark, or patent.
+
+
+
+4. Feedback.
+
+We may provide you with a mechanism to give us feedback, including for example feedback on usability, bug reports, test results, documentation, suggestions and ideas about the Software (together, the "Feedback"). You agree that we may use the Feedback you provide in any way, including in future modifications of the Software. You grant us a perpetual, worldwide, fully transferable, non-revocable, royalty-free right and license to make, use, modify, sell, license, create derivative works from, distribute and display any information you provide to us in the Feedback. You acknowledge that you have all rights necessary to provide the Feedback under this Agreement and acknowledge that we are in no way obligated to incorporate, use or otherwise acknowledge any Feedback that you have provided or compensate you.
+
+
+
+5. No Refund.
+
+No refunds will be offered for the Software once it has been downloaded, except as required by law or as otherwise stated herein.
+
+
+
+6. LIMITED WARRANTY.
+
+THE SOFTWARE IS PROVIDED "AS-IS," AND TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, MILAN SUK DISCLAIMS ALL OTHER WARRANTIES, CONDITIONS, REPRESENTATIONS OR TERMS, EXPRESS OR IMPLIED, BY STATUTE, COMMON LAW, CUSTOM, USAGE OR OTHERWISE, REGARDING THE SOFTWARE AND ANY RELATED MATERIALS, INCLUDING THEIR FITNESS FOR A PARTICULAR PURPOSE, THEIR QUALITY, THEIR MERCHANTABILITY, OR THEIR NONINFRINGEMENT. MILAN SUK DOES NOT WARRANT THAT THE SOFTWARE OR ANY RELATED SERVICES IS SECURE, OR IS FREE FROM BUGS, VIRUSES, ERRORS, OR OTHER PROGRAM LIMITATIONS NOR DOES IT WARRANT ACCESS TO THE INTERNET OR TO ANY OTHER SERVICE THROUGH THE SOFTWARE. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. THIS WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS. YOU MAY HAVE OTHER RIGHTS WHICH VARY FROM JURISDICTION TO JURISDICTION. MILAN SUK DOES NOT SEEK TO LIMIT YOUR WARRANTY RIGHTS TO ANY EXTENT NOT PERMITTED BY LAW. THE ENTIRE RISK AS TO THE RESULTS, QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH YOU.
+
+
+
+7. LIMITATION OF LIABILITY.
+
+MILAN SUK, ITS AFFILIATES, RESELLERS, AND CERTIFICATE AUTHORITIES WILL NOT BE LIABLE TO YOU FOR ANY LOSS, DAMAGES, CLAIMS, OR COSTS WHATSOEVER INCLUDING ANY CONSEQUENTIAL, INDIRECT, OR INCIDENTAL DAMAGES, ANY LOST PROFITS OR LOST SAVINGS, ANY DAMAGES RESULTING FROM BUSINESS INTERRUPTION, PERSONAL INJURY OR FAILURE TO MEET ANY DUTY OF CARE, OR CLAIMS BY A THIRD PARTY, EVEN IF MILAN SUK HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSSES, DAMAGES, CLAIMS, OR COSTS. IN ANY EVENT, MILAN SUK’ AGGREGATE LIABILITY AND THAT OF ITS AFFILIATES, RESELLERS AND CERTIFICATE AUTHORITIES UNDER OR IN CONNECTIOIN WITH THIS AGREEMENT WILL BE LIMITED TO THE AMOUNT PAID FOR THE SOFTWARE. THIS LIMITATION WILL APPLY EVEN IN THE EVENT OF A FUNDAMENTAL OR MATERIAL BREACH BY MILAN SUK OF THIS AGREEMENT. Milan Suk is acting on behalf of its affiliates, and resellers for the purpose of disclaiming, excluding and limiting obligations, warranties, and liability, but in no other respects and for no other purpose.
+
+THE FOREGOING LIMITATIONS AND EXCLUSIONS APPLY TO THE EXTENT PERMITTED BY APPLICABLE LAW IN YOUR JURISDICTION. THIS LIMITATION OF LIABILITY MAY NOT BE VALID IN SOME JURISDICTIONS. YOU MAY HAVE RIGHTS THAT CANNOT BE WAIVED UNDER CONSUMER PROTECTION AND OTHER LAWS. MILAN SUK SOLUTIONS DOES NOT SEEK TO LIMIT YOUR WARRANTY OR REMEDIES TO ANY EXTENT NOT PERMITTED BY LAW.
+
+
+
+9. Indemnification.
+
+You agree to defend, indemnify and hold Milan Suk, harmless from and against any and all claims, losses, liability, costs and expenses (including but not limited to reasonable attorneys' fees) arising from your use of the Software, laws or regulations, or any third party's rights, including but not limited to infringement of any copyright, violation of any proprietary right or invasion of any privacy rights. This obligation will survive the termination of this Agreement.
+
+
+
+10. General Provisions.
+
+If for any reason a court of competent jurisdiction finds any provision, or portion of the License or this Agreement, to be unenforceable, the remainder of the License or this Agreement will continue in full force and effect. This Agreement may only be modified in writing, signed by an authorized officer of Milan Suk and you. This is the entire agreement between Milan Suk and you relating to the Software and the License and it supersedes any prior representations, discussions, undertakings, communications, or advertising relating to the Software. You may not assign or otherwise transfer by operation of law or otherwise this Agreement or any rights or obligations without the prior written consent of Milan Suk. Milan Suk may assign this Agreement to any entity at its sole discretion. The English version of this Agreement will be the version used when interpreting or construing this Agreement.
+
+
+
+11. Electronic Contracting.
+
+Your use of the Software includes the ability to enter into agreements and/or to make transactions electronically. YOU ACKNOWLEDGE THAT YOUR ELECTRONIC SUBMISSIONS CONSTITUTE YOUR AGREEMENT AND INTENT TO BE BOUND BY AND TO PAY FOR SUCH AGREEMENTS AND TRANSACTIONS. YOUR AGREEMENT AND INTENT TO BE BOUND BY ELECTRONIC SUBMISSIONS APPLIES TO ALL RECORDS RELATING TO ALL TRANSACTIONS YOU ENTER INTO WITH MILAN SUK, INCLUDING NOTICES OF CANCELLATION, POLICIES, CONTRACTS, AND APPLICATIONS. In order to access and retain your electronic records, you may be required to have certain hardware and software, which are your sole responsibility.
+
+
+
+Effective 5/8/2013
