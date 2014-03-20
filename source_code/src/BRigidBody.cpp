@@ -24,6 +24,8 @@ BRigidBody::BRigidBody(int type, const btRigidBodyConstructionInfo& construction
 	m_type = type;
 
 	m_update = false;
+
+	m_rel_shape = 0;
 }
 
 
@@ -54,6 +56,8 @@ BRigidBody::~BRigidBody()
 
 	if(getMotionState())
 		delete getMotionState();
+
+	delete m_rel_shape;
 }
 
 
@@ -583,4 +587,26 @@ void BRigidBody::updateDeform(UT_Vector3 cog, SObject* object)
 	bvhShape->refitTree(aabbMin, aabbMax);	//sha->partialRefitTree(aabbMin,aabbMax);
 }
 
+
+void BRigidBody::setRelShape(btCollisionShape* sh)
+{
+	m_rel_shape = sh;
+}
+
+
+
+bool BRigidBody::aproxConvexShape(const int num_substeps)
+{
+	if(m_type!=SOP_Build::TYPE_CONVEX || !m_rel_shape)
+		return false;
+
+	btConvexHullShape* shape = (btConvexHullShape*)getCollisionShape();
+	btConvexHullShape* relShape = (btConvexHullShape*)m_rel_shape;
+	
+	float t = 1.0f / num_substeps;
+	for(int i=0; i < shape->getNumPoints(); i++)
+		shape->getUnscaledPoints()[i] += relShape->getUnscaledPoints()[i] * t;
+
+	return true;
+}
 

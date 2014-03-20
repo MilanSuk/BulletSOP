@@ -674,7 +674,8 @@ void SOP_Solver::updateObjectsProperties(SObject &o, bool updateOnlyCompound)
 			mass = 0;
 
 
-		if(type==SOP_Build::TYPE_DEFORM || type==SOP_Build::TYPE_CONVEX)
+		bool vertexes = type==SOP_Build::TYPE_DEFORM || type==SOP_Build::TYPE_CONVEX;
+		if(vertexes)
 		{
 			if(!o.getShape())
 				THROW_SOP("Solver needs shape(s) - No data on 2nd input", 0);
@@ -683,13 +684,13 @@ void SOP_Solver::updateObjectsProperties(SObject &o, bool updateOnlyCompound)
 
 		if(recreate)
 		{
-			if(body && mass <= 0)	body = createObject(o, ptoff, body->getTranslateFull(), body->getRotateFull(), cog_r, index, type, cbody);	//set old pos/rot for smooth aprox. to new position
+			if(body && mass <= 0)	body = createObject(o, ptoff, body->getTranslateFull(), body->getRotateFull(), cog_r, index, type, cbody, vertexes);	//set old pos/rot for smooth aprox. to new position
 			else					body = 0;
 		}
 
 		if(!body)
 		{
-			body = createObject(o, ptoff, t, r, cog_r, index, type, cbody);	//create object If doesn't exist
+			body = createObject(o, ptoff, t, r, cog_r, index, type, cbody, false);	//create object If doesn't exist
 			if(!body)
 				THROW_SOP("createObject() problem", 0);
 		}
@@ -744,7 +745,7 @@ float getGroundRadius(UT_Vector3 bbox)
 	else					return bbox[2] * 0.5f;
 }
 
-BRigidBody* SOP_Solver::createObject(const SObject &o, const GA_Offset &ptoff, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, int index, int type, BRigidBody* compound)
+BRigidBody* SOP_Solver::createObject(const SObject &o, const GA_Offset &ptoff, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, int index, int type, BRigidBody* compound, bool save_vertexes)
 {
 	UT_Vector3 bbox = o.getBBox(ptoff);
 	float padding = o.getPadding(ptoff);
@@ -752,7 +753,7 @@ BRigidBody* SOP_Solver::createObject(const SObject &o, const GA_Offset &ptoff, U
 	if(type==SOP_Build::TYPE_CONVEX)
 	{
 		UT_Vector3 cog = o.getCOG(ptoff);
-		return m_bullet->addConvex(index, t, r, cog_r, cog, o, compound);
+		return m_bullet->addConvex(index, t, r, cog_r, cog, o, compound, save_vertexes);
 	}
 	else
 	if(type==SOP_Build::TYPE_SPHERE)
@@ -786,7 +787,7 @@ BRigidBody* SOP_Solver::createObject(const SObject &o, const GA_Offset &ptoff, U
 	if(type==SOP_Build::TYPE_DEFORM)
 	{
 		UT_Vector3 cog = o.getCOG(ptoff);
-		return m_bullet->addDeform(index, t, r, cog_r, cog, o, compound);
+		return m_bullet->addDeform(index, t, r, cog_r, cog, o, compound, save_vertexes);
 	}
 	if(type==SOP_Build::TYPE_COMPOUND)
 	{

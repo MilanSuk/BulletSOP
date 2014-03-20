@@ -79,8 +79,8 @@ public:
 	BRigidBody* addCone(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, float rad, float h, BRigidBody* compound);
 	BRigidBody* addCylinder(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, float rad, float h, BRigidBody* compound);
 	BRigidBody* addCompound(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, BRigidBody* compound);
-	BRigidBody* addConvex(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound);
-	BRigidBody* addDeform(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound);
+	BRigidBody* addConvex(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound, bool save_vertexes);
+	BRigidBody* addDeform(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound, bool save_vertexes);
 	//btSoftBody* addSoft(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object);
 
 	BRigidBody* getBody(int i);
@@ -128,6 +128,7 @@ private:
 	void deleteCSTR(int i);						///deletes constaint from "m_constrs" array
 
 	void setKinematicPos(float rel);			///aproximate static bodies
+	void blendConvexVertexes(int num_substep);
 	
 	///add rigid body to world or parent body(compound)
 	///@return new rigid body

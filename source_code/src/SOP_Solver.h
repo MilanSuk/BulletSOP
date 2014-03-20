@@ -57,7 +57,7 @@ private:
 
 	void step();	///simulates
 
-	BRigidBody* createObject(const SObject &o, const GA_Offset &ptoff, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, int index, int type, BRigidBody* compound);	///creates RBD object
+	BRigidBody* createObject(const SObject &o, const GA_Offset &ptoff, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, int index, int type, BRigidBody* compound, bool save_vertexes);	///creates RBD object
 
 	void updateObjects();
 	void updateObjectsProperties(SObject &o, bool updateOnlyCompound);

@@ -351,7 +351,7 @@ BRigidBody* BWorld::addCylinder(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector
 	return body;
 }
 
-BRigidBody* BWorld::addConvex(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound)
+BRigidBody* BWorld::addConvex(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound, bool save_vertexes)
 {
 	cog_r = 0;
 	btConvexHullShape* shape = new btConvexHullShape();
@@ -367,11 +367,34 @@ BRigidBody* BWorld::addConvex(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 
 	for(int i=0; i < points.size(); i++)
 		shape->addPoint( get_bullet_V3(gdp->getPos3(points[i]) - cog) );
 
+
+	//recreate objects between frames - computes relative vec between points for blending during sim. substeps
+	BRigidBody* origBody = getBody(index);
+	btConvexHullShape* relShape = 0;
+	if(origBody)
+	{
+		btConvexHullShape* origShape = (btConvexHullShape*)origBody->getCollisionShape();
+		if(origShape->getNumPoints()==points.size())
+		{
+			relShape = new btConvexHullShape();
+			for(int i=0; i < points.size(); i++)
+			{
+				relShape->addPoint( shape->getUnscaledPoints()[i] - origShape->getUnscaledPoints()[i] );	//computes rel
+				shape->getUnscaledPoints()[i] = origShape->getUnscaledPoints()[i];							//reset actual
+			}
+		}
+		else
+			printf("Warning: Blend points for object[%d] don't updated!\n", index);
+	}
+
 	BRigidBody* body = addRigidObject(SOP_Build::TYPE_CONVEX, shape, index, t, r, cog_r, compound);
+
+	body->setRelShape(relShape);
+
 	return body;
 }
 
-BRigidBody* BWorld::addDeform(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound)
+BRigidBody* BWorld::addDeform(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound, bool save_vertexes)
 {
 	if(!object.isIndexExist(index))
 		return 0;
@@ -788,6 +811,8 @@ void BWorld::stepWorld(float stepSize, int i_substep, int num_substep)
 	m_dynamicsWorld->stepSimulation(stepSize, 0);
 
 	setKinematicPos( ((float)i_substep+1)/num_substep );
+
+	blendConvexVertexes(num_substep);
 }
 
 void BWorld::setKinematicPos(float rel)
@@ -809,6 +834,22 @@ void BWorld::setKinematicPos(float rel)
 		}
 	}
 }
+
+
+
+void BWorld::blendConvexVertexes(int num_substep)
+{
+	for(int i=0; i < m_objs.size(); i++)
+	{
+		BRigidBody* body = m_objs[i];
+		if(body)
+			body->aproxConvexShape(num_substep);
+	}
+}
+
+
+
+
 
 void BWorld::setGravity(UT_Vector3 gravity)
 {

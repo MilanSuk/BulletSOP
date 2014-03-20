@@ -38,6 +38,9 @@ private:
 	btVector3 m_my_totalForce;
 	btVector3 m_my_totalTorque;
 
+	btCollisionShape* m_rel_shape;
+
+
 public:
 	BRigidBody(int type, const btRigidBodyConstructionInfo& constructionInfo, int hId, BRigidBody* compound);
 	virtual ~BRigidBody();
@@ -91,6 +94,9 @@ public:
 	///update for object which has hull_type==TYPE_DEFORM
 	void updateDeform(UT_Vector3 cog, SObject* object);
 	static void updateTriangles(UT_Vector3 cog, const MyVec<GEO_Primitive*> &prims, int num_tri, int* tris, btScalar* vers, btVector3 &aabbMin, btVector3 &aabbMax);
+
+	void setRelShape(btCollisionShape* sh);
+	bool aproxConvexShape(int num_substeps);
 
 private:
 	///return transformation betwee this body and child
