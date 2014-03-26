@@ -691,11 +691,13 @@ void SObject::copyPrimAttrs()
 			GA_FOR_ALL_PRIMITIVE_ATTRIBUTES(m_input->getGeo(), src_attr)
 			{
 				GA_RWHandleF rAttr = SHelper::findPrimitiveAttrF(m_input->getGeo(), src_attr->getName()).getAttribute();
-				GA_RWHandleF wAttr( m_gdp->addPointAttrib(src_attr) );
+				if(rAttr.isValid())
+				{
+					GA_RWHandleF wAttr( m_gdp->addPointAttrib(src_attr) );
 
-				for(int ii=0; ii < rAttr.getTupleSize(); ii++)
-					wAttr.set(ind->ptoff, ii, rAttr.get(ind->getPrimitive(0)->getMapOffset(), ii));
-
+					for(int ii=0; ii < rAttr.getTupleSize(); ii++)
+						wAttr.set(ind->ptoff, ii, rAttr.get(ind->getPrimitive(0)->getMapOffset(), ii));
+				}
 
 				BOSSP_INTERRUPT_EMPTY;
 			}
