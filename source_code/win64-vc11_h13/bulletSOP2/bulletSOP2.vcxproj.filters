@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Bullet">
+      <UniqueIdentifier>{b00f976d-6193-4dfa-9e0b-9e22fb7e6d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Houdini">
+      <UniqueIdentifier>{a5c0545a-5abb-455e-83c7-629d24f900aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Houdini_Helpers">
+      <UniqueIdentifier>{cd4033f3-e326-4da4-a9d8-f9a459cf5713}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\bulletSOP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BCollisionFilter.cpp">
+      <Filter>Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BConstraint.cpp">
+      <Filter>Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BImpact.cpp">
+      <Filter>Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BRigidBody.cpp">
+      <Filter>Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BWorld.cpp">
+      <Filter>Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SOP_Build.cpp">
+      <Filter>Houdini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SOP_ExtraCells.cpp">
+      <Filter>Houdini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SOP_Loader.cpp">
+      <Filter>Houdini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SOP_Modify.cpp">
+      <Filter>Houdini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SOP_Prepare.cpp">
+      <Filter>Houdini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SOP_Solver.cpp">
+      <Filter>Houdini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SOP_Transform.cpp">
+      <Filter>Houdini</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SConstraint.cpp">
+      <Filter>Houdini_Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SEmit.cpp">
+      <Filter>Houdini_Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SForce.cpp">
+      <Filter>Houdini_Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SHelper.cpp">
+      <Filter>Houdini_Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SImpact.cpp">
+      <Filter>Houdini_Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SObject.cpp">
+      <Filter>Houdini_Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SShape.cpp">
+      <Filter>Houdini_Helpers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\EThread.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\stdafx.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BCleanBullet.h">
+      <Filter>Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BCollisionFilter.h">
+      <Filter>Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BConstraint.h">
+      <Filter>Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BImpact.h">
+      <Filter>Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BRigidBody.h">
+      <Filter>Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\BWorld.h">
+      <Filter>Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SOP_Build.h">
+      <Filter>Houdini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SOP_ExtraCells.h">
+      <Filter>Houdini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SOP_Loader.h">
+      <Filter>Houdini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SOP_Modify.h">
+      <Filter>Houdini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SOP_Prepare.h">
+      <Filter>Houdini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SOP_Solver.h">
+      <Filter>Houdini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SOP_Transform.h">
+      <Filter>Houdini</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Grid.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SConstraint.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SEmit.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SForce.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SHelper.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SImpact.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SObject.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SShape.h">
+      <Filter>Houdini_Helpers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

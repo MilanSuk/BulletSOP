@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{043CAA55-19F6-4F18-AAFA-B6CEFE0A35AA}</ProjectGuid>
+    <RootNamespace>bulletSOP2</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>-TP 
+-Zc:forScope 
+-DVERSION=$(houdini13) 
+-DI386 
+-DWIN32 
+-DSWAP_BITFIELDS 
+-D_WIN32_WINNT=0x0501 
+-DWINVER=0x0501 
+-DNOMINMAX 
+-D_USE_MATH_DEFINES 
+-D_CRT_SECURE_NO_DEPRECATE 
+-D_CRT_NONSTDC_NO_DEPRECATE 
+-D_SCL_SECURE_NO_WARNINGS 
+-DBOOST_ALL_NO_LIB  
+-I . 
+-I "C:/Program Files (x86)/Microsoft Visual Studio 9.0/VC/include"
+-I "C:/Program Files/Microsoft SDKs/Windows/v6.0A/Include" 
+-I "C:/Program Files/Side Effects Software/Houdini $(houdini13)/toolkit/include"
+-MD 
+-EHsc 
+-GR 
+-bigobj 
+-wd4355 
+-w14996 
+-DSESI_LITTLE_ENDIAN 
+-DAMD64
+-DSIZEOF_VOID_P=8 
+-DMAKING_DSO 
+-Zm150 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\bullet-2.82-r2704\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_USRDLL;BULLETSOP2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-LD 
+-link 
+/libpath:"C:/Program Files (x86)/Microsoft Visual Studio 9.0/VC/lib/amd64" 
+/libpath:"C:/Program Files/Microsoft SDKs/Windows/v6.0A/Lib/x64" 
+"C:\Program Files\Side Effects Software\Houdini $(houdini13)\custom/houdini/dsolib/*.a" 
+"C:\Program Files\Side Effects Software\Houdini $(houdini13)\custom/houdini/dsolib/*.lib" 
+-out:"C:/Users/Milan/Documents/houdini13.0/dso/SOP_bullet.dll" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>..\bullet-2.82-r2704/lib/*.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>-TP 
+-Zc:forScope 
+-DVERSION=$(houdini13) 
+-DI386 
+-DWIN32 
+-DSWAP_BITFIELDS 
+-D_WIN32_WINNT=0x0501 
+-DWINVER=0x0501 
+-DNOMINMAX 
+-D_USE_MATH_DEFINES 
+-D_CRT_SECURE_NO_DEPRECATE 
+-D_CRT_NONSTDC_NO_DEPRECATE 
+-D_SCL_SECURE_NO_WARNINGS 
+-DBOOST_ALL_NO_LIB  
+-I . 
+-I "C:/Program Files (x86)/Microsoft Visual Studio 9.0/VC/include"
+-I "C:/Program Files/Microsoft SDKs/Windows/v6.0A/Include" 
+-I "C:/Program Files/Side Effects Software/Houdini $(houdini13)/toolkit/include"
+-MD 
+-EHsc 
+-GR 
+-bigobj 
+-wd4355 
+-w14996 
+-DSESI_LITTLE_ENDIAN 
+-DAMD64
+-DSIZEOF_VOID_P=8 
+-DMAKING_DSO 
+-Zm150 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\bullet-2.82-r2704\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BULLETSOP2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-LD 
+-link 
+/libpath:"C:/Program Files (x86)/Microsoft Visual Studio 9.0/VC/lib/amd64" 
+/libpath:"C:/Program Files/Microsoft SDKs/Windows/v6.0A/Lib/x64" 
+"C:\Program Files\Side Effects Software\Houdini $(houdini13)\custom/houdini/dsolib/*.a" 
+"C:\Program Files\Side Effects Software\Houdini $(houdini13)\custom/houdini/dsolib/*.lib" 
+-out:"C:/Users/Milan/Documents/houdini13.0/dso/SOP_bullet.dll" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>..\bullet-2.82-r2704/lib/*.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\bulletSOP.cpp" />
+    <ClCompile Include="..\..\src\EThread.cpp" />
+    <ClCompile Include="..\..\src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\BCollisionFilter.cpp" />
+    <ClCompile Include="..\..\src\BConstraint.cpp" />
+    <ClCompile Include="..\..\src\BImpact.cpp" />
+    <ClCompile Include="..\..\src\BRigidBody.cpp" />
+    <ClCompile Include="..\..\src\BWorld.cpp" />
+    <ClCompile Include="..\..\src\SOP_Build.cpp" />
+    <ClCompile Include="..\..\src\SOP_ExtraCells.cpp" />
+    <ClCompile Include="..\..\src\SOP_Loader.cpp" />
+    <ClCompile Include="..\..\src\SOP_Modify.cpp" />
+    <ClCompile Include="..\..\src\SOP_Prepare.cpp" />
+    <ClCompile Include="..\..\src\SOP_Solver.cpp" />
+    <ClCompile Include="..\..\src\SOP_Transform.cpp" />
+    <ClCompile Include="..\..\src\SConstraint.cpp" />
+    <ClCompile Include="..\..\src\SEmit.cpp" />
+    <ClCompile Include="..\..\src\SForce.cpp" />
+    <ClCompile Include="..\..\src\SHelper.cpp" />
+    <ClCompile Include="..\..\src\SImpact.cpp" />
+    <ClCompile Include="..\..\src\SObject.cpp" />
+    <ClCompile Include="..\..\src\SShape.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\EThread.h" />
+    <ClInclude Include="..\..\src\stdafx.h" />
+    <ClInclude Include="..\..\src\BCleanBullet.h" />
+    <ClInclude Include="..\..\src\BCollisionFilter.h" />
+    <ClInclude Include="..\..\src\BConstraint.h" />
+    <ClInclude Include="..\..\src\BImpact.h" />
+    <ClInclude Include="..\..\src\BRigidBody.h" />
+    <ClInclude Include="..\..\src\BWorld.h" />
+    <ClInclude Include="..\..\src\SOP_Build.h" />
+    <ClInclude Include="..\..\src\SOP_ExtraCells.h" />
+    <ClInclude Include="..\..\src\SOP_Loader.h" />
+    <ClInclude Include="..\..\src\SOP_Modify.h" />
+    <ClInclude Include="..\..\src\SOP_Prepare.h" />
+    <ClInclude Include="..\..\src\SOP_Solver.h" />
+    <ClInclude Include="..\..\src\SOP_Transform.h" />
+    <ClInclude Include="..\..\src\Grid.h" />
+    <ClInclude Include="..\..\src\SConstraint.h" />
+    <ClInclude Include="..\..\src\SEmit.h" />
+    <ClInclude Include="..\..\src\SForce.h" />
+    <ClInclude Include="..\..\src\SHelper.h" />
+    <ClInclude Include="..\..\src\SImpact.h" />
+    <ClInclude Include="..\..\src\SObject.h" />
+    <ClInclude Include="..\..\src\SShape.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
