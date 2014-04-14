@@ -67,12 +67,14 @@ public:
 
 	MyVec(const MyVec& v)
 	{
+		clear();
 		copyIt(v);
 	}
 
 
 	MyVec& operator=(const MyVec& v)
 	{
+		clear();
 		copyIt(v);
 		return *this;
 	}

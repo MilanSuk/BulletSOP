@@ -351,6 +351,7 @@ BRigidBody* BWorld::addCylinder(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector
 	return body;
 }
 
+
 BRigidBody* BWorld::addConvex(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound, bool save_vertexes)
 {
 	cog_r = 0;
@@ -369,30 +370,20 @@ BRigidBody* BWorld::addConvex(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 
 
 
 	//recreate objects between frames - computes relative vec between points for blending during sim. substeps
+	MyVec<btVector3> rel_vec;
 	BRigidBody* origBody = getBody(index);
-	btConvexHullShape* relShape = 0;
 	if(origBody)
-	{
-		btConvexHullShape* origShape = (btConvexHullShape*)origBody->getCollisionShape();
-		if(origShape->getNumPoints()==points.size())
-		{
-			relShape = new btConvexHullShape();
-			for(int i=0; i < points.size(); i++)
-			{
-				relShape->addPoint( shape->getUnscaledPoints()[i] - origShape->getUnscaledPoints()[i] );	//computes rel
-				shape->getUnscaledPoints()[i] = origShape->getUnscaledPoints()[i];							//reset actual
-			}
-		}
-		else
+		if(!origBody->computeAproxConvexRelVec(rel_vec, shape))
 			printf("Warning: Blend points for object[%d] don't updated!\n", index);
-	}
 
 	BRigidBody* body = addRigidObject(SOP_Build::TYPE_CONVEX, shape, index, t, r, cog_r, compound);
 
-	body->setRelShape(relShape);
+	body->getRelShape() = rel_vec;
 
 	return body;
 }
+
+
 
 BRigidBody* BWorld::addDeform(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, UT_Vector3 cog, const SObject &object, BRigidBody* compound, bool save_vertexes)
 {
@@ -407,16 +398,28 @@ BRigidBody* BWorld::addDeform(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 
 	//alloc
 	int* tris = new int[num_tri*3];
 	btScalar* vers = new btScalar[num_ver*3];
-	btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(	num_tri, static_cast<int*>(&tris[0]), sizeof(int)*3,
-																						num_ver, static_cast<btScalar*>(&vers[0]), sizeof(btScalar)*3);
+	btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(	num_tri, tris, sizeof(int)*3,
+																						num_ver, vers, sizeof(btScalar)*3);
 
 	//copy indicates and vertexes
 	btVector3 aabbMin, aabbMax;
 	BRigidBody::updateTriangles(cog, prims, num_tri, tris, vers, aabbMin, aabbMax);
 
-	btCollisionShape* shape = new btBvhTriangleMeshShape(m_indexVertexArrays, true);
+	btBvhTriangleMeshShape* shape = new btBvhTriangleMeshShape(m_indexVertexArrays, true);
 	addCollisionShape(shape);
+
+
+	//recreate objects between frames - computes relative vec between points for blending during sim. substeps
+	MyVec<btVector3> rel_vec;
+	BRigidBody* origBody = getBody(index);
+	if(origBody)
+		if(!origBody->computeAproxDeformRelVec(rel_vec, shape))
+			printf("Warning: Blend points for object[%d] don't updated!\n", index);
+
 	BRigidBody* body = addRigidObject(SOP_Build::TYPE_DEFORM, shape, index, t, r, cog_r, compound);
+
+	body->getRelShape() = rel_vec;
+
 	return body;
 }
 
@@ -843,7 +846,12 @@ void BWorld::blendConvexVertexes(int num_substep)
 	{
 		BRigidBody* body = m_objs[i];
 		if(body)
+		{
 			body->aproxConvexShape(num_substep);
+			
+			if(body->aproxDeformShape(num_substep))
+				cleanCollisionWithDeformBody(body);
+		}
 	}
 }
 

@@ -702,15 +702,6 @@ void SOP_Solver::updateObjectsProperties(SObject &o, bool updateOnlyCompound)
 		}
 
 
-		if(type==SOP_Build::TYPE_DEFORM)
-		{
-			body->updateDeform(o.getCOG(ptoff), &o);
-			m_bullet->cleanCollisionWithDeformBody(body);
-		}
-
-
-
-
 		//set settings
 		body->setMass(mass);
 		body->setVelocity( o.getV(ptoff) );

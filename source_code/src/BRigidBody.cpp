@@ -24,8 +24,6 @@ BRigidBody::BRigidBody(int type, const btRigidBodyConstructionInfo& construction
 	m_type = type;
 
 	m_update = false;
-
-	m_rel_shape = 0;
 }
 
 
@@ -56,8 +54,6 @@ BRigidBody::~BRigidBody()
 
 	if(getMotionState())
 		delete getMotionState();
-
-	delete m_rel_shape;
 }
 
 
@@ -520,6 +516,24 @@ bool BRigidBody::isAproxChanged() const
 
 
 
+
+btVector3 vectorMax(btVector3 v, btVector3 aabbMax)
+{
+	btVector3 ret = aabbMax;
+	if(v[0] > aabbMax[0])	ret[0] = v[0];
+	if(v[1] > aabbMax[1])	ret[1] = v[1];
+	if(v[2] > aabbMax[2])	ret[2] = v[2];
+	return ret;
+}
+btVector3 vectorMin(btVector3 v, btVector3 aabbMin)
+{
+	btVector3 ret = aabbMin;
+	if(v[0] < aabbMin[0])	ret[0] = v[0];
+	if(v[1] < aabbMin[1])	ret[1] = v[1];
+	if(v[2] < aabbMin[2])	ret[2] = v[2];
+	return ret;
+}
+
 void BRigidBody::updateTriangles(UT_Vector3 cog, const MyVec<GEO_Primitive*> &prims, int num_tri, int* tris, btScalar* vers, btVector3 &aabbMin, btVector3 &aabbMax)
 {
 	aabbMin = btVector3(BT_LARGE_FLOAT, BT_LARGE_FLOAT, BT_LARGE_FLOAT);
@@ -544,13 +558,8 @@ void BRigidBody::updateTriangles(UT_Vector3 cog, const MyVec<GEO_Primitive*> &pr
 			vers[i*9+ii*3+2] = v[ii][2];
 
 			//compute bbox
-			if(v[ii][0] > aabbMax[0])	aabbMax[0] = v[ii][0];
-			if(v[ii][1] > aabbMax[1])	aabbMax[1] = v[ii][1];
-			if(v[ii][2] > aabbMax[2])	aabbMax[2] = v[ii][2];
-
-			if(v[ii][0] < aabbMin[0])	aabbMin[0] = v[ii][0];
-			if(v[ii][1] < aabbMin[1])	aabbMin[1] = v[ii][1];
-			if(v[ii][2] < aabbMin[2])	aabbMin[2] = v[ii][2];
+			aabbMax = vectorMax(get_bullet_V3(v[ii]), aabbMax);
+			aabbMin = vectorMin(get_bullet_V3(v[ii]), aabbMin);
 		}
 
 		//set triangle ID(option)
@@ -561,52 +570,116 @@ void BRigidBody::updateTriangles(UT_Vector3 cog, const MyVec<GEO_Primitive*> &pr
 }
 
 
-void BRigidBody::updateDeform(UT_Vector3 cog, SObject* object)
+
+bool BRigidBody::computeAproxConvexRelVec(MyVec<btVector3> &rel_vec, btConvexHullShape* newShape)
 {
-	if(!object->isIndexExist(m_hId))
-		return;
-	const MyVec<GEO_Primitive*> &prims = object->getGEO_Primitives(m_hId);
+	const size_t N = newShape->getNumPoints();
+	btConvexHullShape* origShape = (btConvexHullShape*)getCollisionShape();
 
-	//get data, pointers
-	btBvhTriangleMeshShape* bvhShape = static_cast<btBvhTriangleMeshShape*>( getCollisionShape() );
-	btStridingMeshInterface* mesh = bvhShape->getMeshInterface();
-	btScalar *vers = 0; int numverts; PHY_ScalarType type; int stride;int *tris = 0;int indexstride;int numfaces;PHY_ScalarType indicestype;
-	mesh->getLockedVertexIndexBase(reinterpret_cast<unsigned char**>(&vers), numverts, type, stride, reinterpret_cast<unsigned char**>(&tris), indexstride, numfaces, indicestype);
-
-	//check size
-	const int numtris = numverts/3;
-	if(prims.size()!=numtris)
-		return;
-
-	//update
-	btVector3 aabbMin, aabbMax;
-	BRigidBody::updateTriangles(cog, prims, numtris, tris, vers, aabbMin, aabbMax);
-
-	//update inside Bullet Library
-	mesh->unLockVertexBase(0);
-	bvhShape->refitTree(aabbMin, aabbMax);	//sha->partialRefitTree(aabbMin,aabbMax);
-}
-
-
-void BRigidBody::setRelShape(btCollisionShape* sh)
-{
-	m_rel_shape = sh;
-}
-
-
-
-bool BRigidBody::aproxConvexShape(const int num_substeps)
-{
-	if(m_type!=SOP_Build::TYPE_CONVEX || !m_rel_shape)
+	if(origShape->getNumPoints()==N)
+	{
+		rel_vec.resize(N);
+		for(int i=0; i < N; i++)
+		{
+			rel_vec[i] = newShape->getUnscaledPoints()[i] - origShape->getUnscaledPoints()[i];	//computes rel
+			newShape->getUnscaledPoints()[i] = origShape->getUnscaledPoints()[i];				//reset actual
+		}
+	}
+	else
 		return false;
-
-	btConvexHullShape* shape = (btConvexHullShape*)getCollisionShape();
-	btConvexHullShape* relShape = (btConvexHullShape*)m_rel_shape;
-	
-	float t = 1.0f / num_substeps;
-	for(int i=0; i < shape->getNumPoints(); i++)
-		shape->getUnscaledPoints()[i] += relShape->getUnscaledPoints()[i] * t;
 
 	return true;
 }
 
+
+bool BRigidBody::computeAproxDeformRelVec(MyVec<btVector3> &rel_vec, btBvhTriangleMeshShape* newShape)
+{
+	btStridingMeshInterface* newMesh = newShape->getMeshInterface();
+	btScalar *new_vers = 0; int new_numverts; PHY_ScalarType new_type; int new_stride;int *new_tris = 0;int new_indexstride;int new_numfaces;PHY_ScalarType new_indicestype;
+	newMesh->getLockedReadOnlyVertexIndexBase((const unsigned char**)&new_vers, new_numverts, new_type, new_stride, (const unsigned char**)&new_tris, new_indexstride, new_numfaces, new_indicestype);
+
+
+	btBvhTriangleMeshShape* origShape = (btBvhTriangleMeshShape*)getCollisionShape();
+	btStridingMeshInterface* origMesh = origShape->getMeshInterface();
+	btScalar *orig_vers = 0; int orig_numverts; PHY_ScalarType orig_type; int orig_stride;int *orig_tris = 0;int orig_indexstride;int orig_numfaces;PHY_ScalarType orig_indicestype;
+	origMesh->getLockedReadOnlyVertexIndexBase((const unsigned char**)&orig_vers, orig_numverts, orig_type, orig_stride, (const unsigned char**)&orig_tris, orig_indexstride, orig_numfaces, orig_indicestype);
+
+	if(orig_numverts==new_numverts)
+	{
+		rel_vec.resize(new_numverts);
+		for(int i=0; i < new_numverts; i++)
+		{
+			for(int ii=0; ii < 3; ii++)
+			{
+				rel_vec[i][ii] = new_vers[i*3+ii] - orig_vers[i*3+ii];	//computes rel
+				new_vers[i*3+ii] = orig_vers[i*3+ii];					//reset actual ...
+			}
+			rel_vec[i][3] = 1.0f;	//just for sure
+		}
+	}
+	else
+		return false;
+
+	return true;
+}
+
+
+MyVec<btVector3>& BRigidBody::getRelShape()
+{
+	return m_rel_shape;
+}
+
+bool BRigidBody::aproxConvexShape(const int num_substeps)
+{
+	if(m_type!=SOP_Build::TYPE_CONVEX)
+		return false;
+
+	btConvexHullShape* shape = (btConvexHullShape*)getCollisionShape();
+	
+	if(m_rel_shape.size()!=shape->getNumPoints())
+		return false;
+	
+	float t = 1.0f / num_substeps;
+	for(int i=0; i < m_rel_shape.size(); i++)
+		shape->getUnscaledPoints()[i] += m_rel_shape[i] * t;
+
+	return true;
+}
+
+
+bool BRigidBody::aproxDeformShape(const int num_substeps)
+{
+	if(m_type!=SOP_Build::TYPE_DEFORM)
+		return false;
+
+	btBvhTriangleMeshShape* shape = (btBvhTriangleMeshShape*)getCollisionShape();
+	btStridingMeshInterface* mesh = shape->getMeshInterface();
+	btScalar *vers = 0; int numverts; PHY_ScalarType type; int stride;int *tris = 0;int indexstride;int numfaces;PHY_ScalarType indicestype;
+	mesh->getLockedVertexIndexBase(reinterpret_cast<unsigned char**>(&vers), numverts, type, stride, reinterpret_cast<unsigned char**>(&tris), indexstride, numfaces, indicestype);
+
+
+	if(m_rel_shape.size()!=numverts)
+		return false;
+	
+	btVector3 aabbMin = btVector3(BT_LARGE_FLOAT, BT_LARGE_FLOAT, BT_LARGE_FLOAT);
+	btVector3 aabbMax = btVector3(-BT_LARGE_FLOAT, -BT_LARGE_FLOAT, -BT_LARGE_FLOAT);
+
+	float t = 1.0f / num_substeps;
+	for(int i=0; i < m_rel_shape.size(); i++)
+	{
+		btVector3 v(vers[i*3+0] + m_rel_shape[i][0] * t, 
+					vers[i*3+1] + m_rel_shape[i][1] * t, 
+					vers[i*3+2] + m_rel_shape[i][2] * t);
+
+		for(int ii=0; ii < 3; ii++)
+			vers[i*3+ii] = v[ii];
+
+		aabbMax = vectorMax(v, aabbMax);
+		aabbMin = vectorMin(v, aabbMin);
+	}
+
+	//update inside Bullet Library
+	mesh->unLockVertexBase(0);
+	shape->refitTree(aabbMin, aabbMax);	//sha->partialRefitTree(aabbMin,aabbMax);
+	return true;
+}
