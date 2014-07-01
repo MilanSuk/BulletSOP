@@ -156,7 +156,7 @@ public:
 	void erase(size_t i)
 	{
 		if(i < m_data_size-1)
-			memmove(m_data+i, m_data+i+1, size()-i-1);
+			memmove(m_data+i, m_data+i+1, (size()-i-1)*sizeof(T));	//copy
 		m_data_size--;
 	}
 
