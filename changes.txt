@@ -43,3 +43,16 @@
 * Added: btSolver "Share Shapes" option for Boxes/Spheres - saving memory
 * Improved: Source code has cleaner code(std::vector => MyVec, ...)
 * Improved: Faster Forces uploading
+
+
+2.0.12
+* Added: Blending algorithm for smooth collision with animated convex bodies
+* Fixed: btBuild crash when "copy primitive attributes" was check
+* Added: Blending algorithm for smooth collision with animated deform bodies
+* Changed: You need to activate "recreate" properties for Deform bodies otherwise plugin doesn't send new vertex positions to solver!
+
+
+2.0.13
+* Fixed: Removing item from vector
+
+
