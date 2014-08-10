@@ -130,7 +130,7 @@ OP_ERROR SOP_Solver::cookMySop(OP_Context &context)
 				updateObjects();
 				updateConstraints();
 				updateCollisionGroups();
-
+				updateIgnoreCollisionGroups();
 				m_bullet->getCollisionFilter()->run(true);
 			}
 		}
@@ -308,7 +308,7 @@ void SOP_Solver::updateCollisionGroups()
 	o.initFind(&m_boss, m_input_prop);
 
 	BCollisionFilter* cf = m_bullet->getCollisionFilter();
-	cf->clear();
+	cf->clearGroups();
 
 	UT_String group_name;
 	COLLISION_GROUP_NAME(group_name);
@@ -350,6 +350,50 @@ void SOP_Solver::updateCollisionGroups()
 
 	BOSS_END;
 }
+
+
+
+void SOP_Solver::updateIgnoreCollisionGroups()
+{
+	BOSS_START;
+
+	BCollisionFilter* cf = m_bullet->getCollisionFilter();
+	cf->clearIgnoreGroups();
+
+	SConstraint cstr;
+	cstr.initFind(&m_boss, m_input_const);
+
+	GEO_Primitive* prim;
+	int i=0;
+	int num_prims = (int)m_input_const->getPrimitiveMap().indexSize();
+	GA_FOR_ALL_PRIMITIVES(m_input_const, prim)	//iterate over all primitives(constraints)
+	{
+		GA_Offset primoff = prim->getMapOffset();
+
+		int indexA = cstr.getIndexA(primoff);
+		int indexB = cstr.getIndexB(primoff);
+		BRigidBody* bodyA = m_bullet->getBody(indexA);
+		BRigidBody* bodyB = m_bullet->getBody(indexB);
+
+		if(!cstr.getCollision(primoff))
+		{
+			int group_i = cf->addIgnoreGroup();
+			cf->addIgnoreProxy(group_i, bodyA->getBroadphaseProxy());
+			cf->addIgnoreProxy(group_i, bodyB->getBroadphaseProxy());
+		}
+
+		BOSS_INTERRUPT(i, num_prims);
+		i++;
+	}
+
+	cf->optimizeIgnoreGroups();	//delete duplicity pairs
+
+	BOSS_END;
+}
+
+
+
+
 
 
 
@@ -438,6 +482,7 @@ void SOP_Solver::updateConstr(SConstraint* cstr, GEO_Primitive* prim)
 		THROW_SOP(t, 0);
 	}
 
+
 	//update settings
 	c->setLU( cstr->getLinupperlimit(primoff) );
 	c->setLL( cstr->getLinlowerlimit(primoff) );
@@ -482,7 +527,6 @@ void SOP_Solver::updateConstraints()
 	}
 	if(prim_max_index)
 		updateConstr(&cstr, prim_max_index);
-
 
 	m_bullet->startUpdateConstraints();	//again we need to setUpdate(FALSE) for last constraints(prim_max_index)!
 
@@ -803,12 +847,8 @@ void SOP_Solver::step()
 	//update
 	updateObjects();
 	updateConstraints();
-
-	if(UPDATE_COLLISION_GROUP())
-	{
-		m_bullet->cleanCollision();
-		updateCollisionGroups();
-	}
+	updateCollisionGroups();
+	updateIgnoreCollisionGroups();
 
 
 	//turn on or off creating impact data
@@ -838,10 +878,6 @@ void SOP_Solver::step()
 
 		BOSS_INTERRUPT(i+1, SUBSTEPS());
 	}
-
-
-//	if(UPDATE_COLLISION_GROUP())
-//		updateCollisionGroups();
 
 
 	BOSS_END;
@@ -1116,7 +1152,6 @@ static PRM_Name names[] = {
 	PRM_Name("sep3", "sep3"),
 
 	PRM_Name("collision_group_name",	"Collision Group Name"),
-	PRM_Name("update_collision_group",	"Update Collision Group"),
 
 	PRM_Name("sep4", "sep4"),
 
@@ -1168,7 +1203,7 @@ static PRM_Name names2[] = {
 
 
 static PRM_Default  tabs[] = {
-	PRM_Default(22, "Basic"),
+	PRM_Default(21, "Basic"),
     PRM_Default(14, "Advanced"),
 };
 
@@ -1222,21 +1257,20 @@ PRM_Template SOP_Solver::myTemplateList[] = {
 		PRM_Template(PRM_SEPARATOR, 1, &names[12]),
 
 		PRM_Template(PRM_STRING,	1, &names[13], &col_group_name),
-		PRM_Template(PRM_TOGGLE,1, &names[14]),
 
-		PRM_Template(PRM_SEPARATOR, 1, &names[15]),
+		PRM_Template(PRM_SEPARATOR, 1, &names[14]),
 
+		PRM_Template(PRM_TOGGLE,1, &names[15]),
 		PRM_Template(PRM_TOGGLE,1, &names[16]),
-		PRM_Template(PRM_TOGGLE,1, &names[17]),
 
-		PRM_Template(PRM_SEPARATOR, 1, &names[18]),
+		PRM_Template(PRM_SEPARATOR, 1, &names[17]),
 
-		PRM_Template(PRM_INT,	1, &names[19], PRMoneDefaults, &outputMenu),
-		PRM_Template(PRM_TOGGLE,	1, &names[20], PRMoneDefaults),
+		PRM_Template(PRM_INT,	1, &names[18], PRMoneDefaults, &outputMenu),
+		PRM_Template(PRM_TOGGLE,	1, &names[19], PRMoneDefaults),
 	
-		PRM_Template(PRM_SEPARATOR, 1, &names[21]),
+		PRM_Template(PRM_SEPARATOR, 1, &names[20]),
 
-		PRM_Template(PRM_TOGGLE_E,	1, &names[22], PRMoneDefaults),
+		PRM_Template(PRM_TOGGLE_E,	1, &names[21], PRMoneDefaults),
 		
 
 		//advanced

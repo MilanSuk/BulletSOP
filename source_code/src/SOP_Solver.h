@@ -65,6 +65,7 @@ private:
 	void updateConstr(SConstraint* cstr, GEO_Primitive* prim);
 	void updateForces();
 	void updateCollisionGroups();
+	void updateIgnoreCollisionGroups();
 
 	void setOutputFull(GU_Detail* g, bool update);
 	void setOutputTransform(bool add_velocity, GU_Detail* g, bool update);
@@ -88,7 +89,6 @@ private:
 
 	int SHARE_SHAPES() const { INT_PARM("share_shapes", 0, m_time) }
 
-	int UPDATE_COLLISION_GROUP() const { INT_PARM("update_collision_group", 0, m_time) }
 	int FORCE_SUBSTEPPING() const { INT_PARM("force_substepping", 0, m_time) }
 	int CONSTRAINT_SUBSTEPPING() const { INT_PARM("constraint_substepping", 0, m_time) }
 
