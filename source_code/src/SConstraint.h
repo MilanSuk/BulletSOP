@@ -38,6 +38,7 @@ private:
 	GA_RWHandleI m_attr_bt_update;
 	GA_RWHandleI m_attr_bt_recreate;
 	GA_RWHandleI m_attr_bt_equilibrium;
+	GA_RWHandleI m_attr_bt_collision;
 
 	static int g_max_constr_index;	///This is not effective!!! Need to be improved!!!
 
@@ -52,7 +53,7 @@ public:
 	GEO_Primitive* add();	///adds constraint
 	void addToGroup(GA_PrimitiveGroup* group);	///adds all forces(points) to group
 
-	void createMinimumDistanceConstraints(float toler_distance, float stiffness, float damping, float max_force, bool weariness, int iter, float memory_mult);	///generates constraints according minimum distance(toler_distance)
+	void createMinimumDistanceConstraints(float toler_distance, float stiffness, float damping, float max_force, bool weariness, int iter, bool collision, float memory_mult);	///generates constraints according minimum distance(toler_distance)
 	void deleteDuplicity(const GA_PrimitiveGroup* myGroupPr);	///deletes duplicity rows => row with same indexA and indexB(can be switch)
 
 	void setIndex(const GA_Offset &off, int i);
@@ -74,6 +75,7 @@ public:
 	void setEquilibrium(const GA_Offset &off, bool v);
 	void setLinearLock(GEO_Primitive* prim);
 	void setActualForce(const GA_Offset &off, float v);
+	void setCollision(const GA_Offset &off, bool v);
 
 	UT_Vector3 getPosA(GEO_Primitive* prim) const;
 	UT_Vector3 getPosB(GEO_Primitive* prim) const;
@@ -92,4 +94,5 @@ public:
 	bool getUpdate(const GA_Offset &off) const;
 	bool getRecreate(const GA_Offset &off) const;
 	bool getEquilibrium(const GA_Offset &off) const;
+	bool getCollision(const GA_Offset &off) const;
 };

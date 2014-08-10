@@ -89,6 +89,7 @@ private:
 
 	int CSTR_WEARINESS() const { INT_PARM("cstr_weariness", 0, m_time) }
 	int CSTR_ITER() const { INT_PARM("cstr_iter", 0, m_time) }
+	int CSTR_COLLISION() const { INT_PARM("cstr_collision", 0, m_time) }
 
 	int CSTR_DEL_DUPLICITY() const { INT_PARM("cstr_delduplicity", 0, m_time) }
 

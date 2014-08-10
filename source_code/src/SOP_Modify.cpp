@@ -179,6 +179,7 @@ void SOP_Modify::changeConstraints(GA_PrimitiveGroup* myGroupPr)
 		constr.setMaxForce(primoff, CSTR_MAX_FORCE());
 		constr.setWeariness(primoff, CSTR_WEARINESS()!=0);
 		constr.setIter(primoff, CSTR_ITER());
+		constr.setCollision(primoff, CSTR_COLLISION()!=0);
 		constr.setLL(primoff, CSTR_LL());
 		constr.setLU(primoff, CSTR_LU());
 		constr.setAL(primoff, CSTR_AL());
@@ -404,6 +405,7 @@ static PRM_Name cstr_names[] = {
 	PRM_Name("cstr_angupperlimit",	"Angular Upper Limit"),
 	PRM_Name("cstr_iter",	"Iteration"),
 	PRM_Name("cstr_weariness",	"Weariness"),
+	PRM_Name("cstr_collision",	"Collision"),
 	PRM_Name("cstr_reset_equilibrium",	"Reset Equilibrium"),
 	PRM_Name("cstr_update",	"Update"),
 	PRM_Name("cstr_recreate",	"Recreate"),
@@ -426,6 +428,7 @@ static PRM_Default cstr_def[] = {
 
 	PRM_Default(0, "$BITER"),
 	PRM_Default(0, "$BWEAR"),
+	PRM_Default(0, "$BCOL"),
 	PRM_Default(0, "$BEQU"),
 	PRM_Default(0, "$BUPDATE"),
 	PRM_Default(0, "$BRECREATE"),
@@ -497,7 +500,7 @@ static PRM_Name name_group2("group2", "Constraint Group");
 
 static PRM_Default  switcherList[] = {
     PRM_Default(19, "RBDs"),
-	PRM_Default(17, "Constraints"),
+	PRM_Default(18, "Constraints"),
 	PRM_Default(7, "Forces"),
 	PRM_Default(1, "Impacts"),
 	PRM_Default(3, "Emits"),
@@ -559,10 +562,11 @@ SOP_Modify::myTemplateList[] = {
 	PRM_Template(PRM_INT,	1, &cstr_names[11], &cstr_def[11]),
 	PRM_Template(PRM_INT,	1, &cstr_names[12], &cstr_def[12]),
 	PRM_Template(PRM_INT,	1, &cstr_names[13], &cstr_def[13]),
+	PRM_Template(PRM_INT,	1, &cstr_names[14], &cstr_def[14]),
 	
-	PRM_Template(PRM_SEPARATOR,	1, &cstr_names[14]),
-	PRM_Template(PRM_TOGGLE,	1, &cstr_names[15]),
+	PRM_Template(PRM_SEPARATOR,	1, &cstr_names[15]),
 	PRM_Template(PRM_TOGGLE,	1, &cstr_names[16]),
+	PRM_Template(PRM_TOGGLE,	1, &cstr_names[17]),
 
 	//Forces
 	PRM_Template(PRM_INT,	1, &forc_names[0], &forc_def[0]),

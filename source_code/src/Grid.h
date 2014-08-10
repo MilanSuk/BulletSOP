@@ -113,7 +113,7 @@ public:
 
 	///i - index of points from We want to create constraints
 	///constr - constraints output
-	void createMinimumDistanceConstraints(SShape* shape, int i, SConstraint* constr, float stiffness, float damping, float max_force, bool weariness, int iter)
+	void createMinimumDistanceConstraints(SShape* shape, int i, SConstraint* constr, float stiffness, float damping, float max_force, bool weariness, int iter, bool collision)
 	{
 		GA_Offset ptoff = shape->getGeo()->pointOffset(i);
 
@@ -158,7 +158,7 @@ public:
 								constr->setMaxForce(proff, max_force);
 								constr->setWeariness(proff, weariness);
 								constr->setIter(proff, iter);
-
+								constr->setCollision(proff, collision);
 								constr->setLinearLock(pr);
 								constr->setAL(proff, UT_Vector3(0,0,0));
 								constr->setAU(proff, UT_Vector3(0,0,0));

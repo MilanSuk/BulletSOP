@@ -177,7 +177,8 @@ void SOP_Build::fillConstraints(GU_Detail* input_1, GA_PrimitiveGroup* group_pr)
 			cstr.setMaxForce(primoff, CSTR_STAT_MAX_FORCE(&i));
 			cstr.setWeariness(primoff, CSTR_STAT_WEARINESS(&i)!=0);
 			cstr.setIter(primoff, CSTR_STAT_ITER(&i));
-
+			cstr.setCollision(primoff, CSTR_STAT_COLLISION(&i)!=0);
+			
 			if(CSTR_STAT_LOCK(&i))
 			{
 				UT_Vector3 lock = e-s;
@@ -197,7 +198,7 @@ void SOP_Build::fillConstraints(GU_Detail* input_1, GA_PrimitiveGroup* group_pr)
 	else
 	if(CSTR_STAT_GEN()==CONSTRAINTS_GEN)	//generate constraints from geometry
 	{
-		cstr.createMinimumDistanceConstraints(CSTR_GEN_TOLER_DISTANCE(), CSTR_GEN_STIFFNESS(), CSTR_GEN_DAMPING(), CSTR_GEN_MAXFORCE(), CSTR_GEN_WEARINESS()!=0, CSTR_GEN_ITER(), CSTR_GEN_MEMORY());
+		cstr.createMinimumDistanceConstraints(CSTR_GEN_TOLER_DISTANCE(), CSTR_GEN_STIFFNESS(), CSTR_GEN_DAMPING(), CSTR_GEN_MAXFORCE(), CSTR_GEN_WEARINESS()!=0, CSTR_GEN_ITER(), CSTR_GEN_COLLISION()!=0, CSTR_GEN_MEMORY());
 	}
 
 	if(group_pr)
@@ -483,6 +484,7 @@ static PRM_Name cstr_names[] = {
 	PRM_Name("cstr_sep4", "sep1"),
 	PRM_Name("cstr_stat_iter",	"Iteration"),
 	PRM_Name("cstr_stat_weariness",	"Weariness"),
+	PRM_Name("cstr_stat_collision",	"Collision"),	//
 
 	//gen
 	PRM_Name("cstr_gen_toler_distance",	"Maximum Distance"),
@@ -492,6 +494,7 @@ static PRM_Name cstr_names[] = {
 	PRM_Name("cstr_gen_maxforce",	"Maximum Force"),
 	PRM_Name("cstr_gen_iter",	"Iteration"),
 	PRM_Name("cstr_gen_weariness",	"Weariness"),
+	PRM_Name("cstr_gen_collision",	"Collision"),	//
 	PRM_Name("cstr_sep7", "sep1"),
 	PRM_Name("cstr_gen_memory",	"Max Memory(MB)"),
 
@@ -521,7 +524,7 @@ static PRM_Default	cstr_iter(-1);
 
 static PRM_Default  cstr_switcherList[] = {
 	PRM_Default(1, "Static"),
-    PRM_Default(9, "Generating"),
+    PRM_Default(10, "Generating"),
 };
 
 
@@ -552,6 +555,7 @@ PRM_Template myConstraints[] = {
 
 	PRM_Template(PRM_INT,	1, &cstr_names[18], &cstr_iter, 0, &g_range_minus_one_more),
 	PRM_Template(PRM_TOGGLE,	1, &cstr_names[19], 0),
+	PRM_Template(PRM_TOGGLE,	1, &cstr_names[20], PRMoneDefaults),
 
     PRM_Template()
 };
@@ -698,18 +702,19 @@ SOP_Build::myTemplateList[] = {
 
 		//Constraints
 		PRM_Template(PRM_SWITCHER_EXCLUSIVE, 2, &cstr_names[0], cstr_switcherList),
-			PRM_Template(PRM_MULTITYPE_LIST, myConstraints, 18, &cstr_names[1], PRMoneDefaults),
+			PRM_Template(PRM_MULTITYPE_LIST, myConstraints, 19, &cstr_names[1], PRMoneDefaults),
 
-			PRM_Template(PRM_FLT,	1, &cstr_names[20], &cstr_toler_distance, 0, &g_range_zero_min_more),
-			PRM_Template(PRM_SEPARATOR, 1, &cstr_names[21]),
-			PRM_Template(PRM_FLT,	1, &cstr_names[22], &cstr_stiffness, 0, &g_range_zero_more),
-			PRM_Template(PRM_FLT,	1, &cstr_names[23], &cstr_damping, 0, &g_range_zero_more),
-			PRM_Template(PRM_FLT,	1, &cstr_names[24], &cstr_maxforce, 0, &g_range_zero_more),
-			PRM_Template(PRM_INT, 1, &cstr_names[25], &cstr_iter, 0, &g_range_minus_one_more),
-			PRM_Template(PRM_TOGGLE,1, &cstr_names[26], 0),
+			PRM_Template(PRM_FLT,	1, &cstr_names[21], &cstr_toler_distance, 0, &g_range_zero_min_more),
+			PRM_Template(PRM_SEPARATOR, 1, &cstr_names[22]),
+			PRM_Template(PRM_FLT,	1, &cstr_names[23], &cstr_stiffness, 0, &g_range_zero_more),
+			PRM_Template(PRM_FLT,	1, &cstr_names[24], &cstr_damping, 0, &g_range_zero_more),
+			PRM_Template(PRM_FLT,	1, &cstr_names[25], &cstr_maxforce, 0, &g_range_zero_more),
+			PRM_Template(PRM_INT, 1, &cstr_names[26], &cstr_iter, 0, &g_range_minus_one_more),
+			PRM_Template(PRM_TOGGLE,1, &cstr_names[27], 0),
+			PRM_Template(PRM_TOGGLE,1, &cstr_names[28], PRMoneDefaults),
 
-			PRM_Template(PRM_SEPARATOR, 1, &cstr_names[27]),
-			PRM_Template(PRM_FLT,	1, &cstr_names[28], &cstr_memory, 0, &g_range_one_more),
+			PRM_Template(PRM_SEPARATOR, 1, &cstr_names[29]),
+			PRM_Template(PRM_FLT,	1, &cstr_names[30], &cstr_memory, 0, &g_range_one_more),
 
 
 		//Forces

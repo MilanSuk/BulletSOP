@@ -46,6 +46,7 @@ void SConstraint::init(SOPBoss* boss, GU_Detail* gdp, SShape* input)
 	m_attr_bt_update = SHelper::addIntPrimitiveAttr(m_gdp, "bt_update", 1);
 	m_attr_bt_recreate = SHelper::addIntPrimitiveAttr(m_gdp, "bt_recreate", 1);
 	m_attr_bt_equilibrium = SHelper::addIntPrimitiveAttr(m_gdp, "bt_equilibrium", 1);
+	m_attr_bt_collision = SHelper::addIntPrimitiveAttr(m_gdp, "bt_collision", 1);
 
 
 	m_gdp->addVariableName("bt_index", "BI");
@@ -67,6 +68,7 @@ void SConstraint::init(SOPBoss* boss, GU_Detail* gdp, SShape* input)
 	m_gdp->addVariableName("bt_update", "BUPDATE");
 	m_gdp->addVariableName("bt_recreate", "BRECREATE");
 	m_gdp->addVariableName("bt_equilibrium", "BEQU");
+	m_gdp->addVariableName("bt_collision", "BCOL");
 }
 
 
@@ -95,7 +97,9 @@ void SConstraint::initFind(SOPBoss* boss, GU_Detail* gdp, SShape* input)
 	m_attr_bt_update = SHelper::findPrimitiveAttrI(m_gdp, "bt_update");
 	m_attr_bt_recreate = SHelper::findPrimitiveAttrI(m_gdp, "bt_recreate");
 	m_attr_bt_equilibrium = SHelper::findPrimitiveAttrI(m_gdp, "bt_equilibrium");
+	m_attr_bt_collision = SHelper::findPrimitiveAttrI(m_gdp, "bt_collision");
 
+	
 
 	if(m_attr_bt_index.isInvalid())		THROW_SOP("SConstraint: No \"bt_index\" primitive attribute", 0);
 	if(m_attr_bt_index_a.isInvalid())	THROW_SOP("SConstraint: No \"bt_index_a\" primitive attribute", 0);
@@ -116,6 +120,7 @@ void SConstraint::initFind(SOPBoss* boss, GU_Detail* gdp, SShape* input)
 	if(m_attr_bt_update.isInvalid())		THROW_SOP("SConstraint: No \"bt_update\" primitive attribute", 0);
 	if(m_attr_bt_recreate.isInvalid())		THROW_SOP("SConstraint: No \"bt_recreate\" primitive attribute", 0);
 	if(m_attr_bt_equilibrium.isInvalid())	THROW_SOP("SConstraint: No \"bt_equilibrium\" primitive attribute", 0);
+	if(m_attr_bt_collision.isInvalid())		THROW_SOP("SConstraint: No \"bt_collision\" primitive attribute", 0);
 
 }
 
@@ -209,7 +214,7 @@ void SConstraint::deleteDuplicity(const GA_PrimitiveGroup* myGroupPr)
 
 
 
-void SConstraint::createMinimumDistanceConstraints(float toler_distance, float stiffness, float damping, float max_force, bool weariness, int iter, float memory_mult)
+void SConstraint::createMinimumDistanceConstraints(float toler_distance, float stiffness, float damping, float max_force, bool weariness, int iter, bool collision, float memory_mult)
 {
 	BOSSP_START;
 
@@ -231,7 +236,7 @@ void SConstraint::createMinimumDistanceConstraints(float toler_distance, float s
 	const int npoints = m_input->getNumPoints();
 	for( int i = 0; i < npoints; i++ )
 	{
-		g.createMinimumDistanceConstraints(m_input, i, this, stiffness, damping, max_force, weariness, iter);
+		g.createMinimumDistanceConstraints(m_input, i, this, stiffness, damping, max_force, weariness, iter, collision);
 
 		BOSSP_INTERRUPT(i, npoints);
 	}
@@ -318,7 +323,10 @@ bool SConstraint::getEquilibrium(const GA_Offset &off) const
 {
 	return m_attr_bt_equilibrium.get(off) != 0;
 }
-
+bool SConstraint::getCollision(const GA_Offset &off) const
+{
+	return m_attr_bt_collision.get(off) != 0;
+}
 
 
 
@@ -406,6 +414,12 @@ void SConstraint::setLinearLock(GEO_Primitive* prim)
 void SConstraint::setActualForce(const GA_Offset &off, float v)
 {
 	m_attr_bt_actforce.set(off, v);
+}
+
+
+void SConstraint::setCollision(const GA_Offset &off, bool v)
+{
+	m_attr_bt_collision.set(off, v);
 }
 
 

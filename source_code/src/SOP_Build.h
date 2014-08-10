@@ -76,6 +76,7 @@ private:
 	int CSTR_GEN_WEARINESS() const { INT_PARM("cstr_gen_weariness", 0, m_time) }
 	float CSTR_GEN_MEMORY() const { FLT_PARM("cstr_gen_memory", 0, m_time) }
 	int CSTR_GEN_ITER() const { INT_PARM("cstr_gen_iter", 0, m_time) }
+	int CSTR_GEN_COLLISION() const { INT_PARM("cstr_gen_collision", 0, m_time) }
 	
 
 
@@ -93,6 +94,7 @@ private:
 	UT_Vector3 CSTR_STAT_AU(int* i) const { V3_PARM_MULT("cstr_stat_angupperlimit", m_time, i) }
 	int CSTR_STAT_WEARINESS(int* i) const { INT_PARM_MULT("cstr_stat_weariness", 0, m_time, i) }
 	int CSTR_STAT_ITER(int* i) { INT_PARM_MULT("cstr_stat_iter", 0, m_time, i) }
+	int CSTR_STAT_COLLISION(int* i) { INT_PARM_MULT("cstr_stat_collision", 0, m_time, i) }
 
 
 	int FORC_NUM_TABS() const { INT_PARM("forc_forces_tab", 0, m_time) }
