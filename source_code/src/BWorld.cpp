@@ -882,51 +882,6 @@ void BWorld::cleanCollisionWithDeformBody(BRigidBody* body)
 	m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->cleanProxyFromPairs(body->getBroadphaseHandle(), m_dynamicsWorld->getDispatcher());
 }
 
-void BWorld::cleanCollision()
-{
-/*
-	m_dynamicsWorld->getBroadphase()->resetPool( m_dynamicsWorld->getDispatcher() );
-
-	m_dynamicsWorld->getConstraintSolver()->reset();
-	
-	for(int i=0; i < m_objs.size(); i++)
-	{
-		BRigidBody* body = m_objs[i];
-		if(body)
-		{
-			cleanCollisionWithDeformBody(body);
-
-			//m_dynamicsWorld->getCollisionWorld()->updateAabbs();
-
-			//m_dynamicsWorld->getDispatcher()->dispatchAllCollisionPairs(body->getOverlappingPairCache(), m_dynamicsWorld->getDispatchInfo(), m_dynamicsWorld->getDispatcher());
-
-			m_dynamicsWorld->getPairCache()->removeOverlappingPairsContainingProxy(body->getBroadphaseHandle(), m_dynamicsWorld->getDispatcher());
-			m_dynamicsWorld->getPairCache()->cleanProxyFromPairs( body->getBroadphaseHandle(), m_dynamicsWorld->getDispatcher() );
-		}
-	}
-*/
-/*
-	int numManifolds = m_dynamicsWorld->getDispatcher()->getNumManifolds();
-	for (int i=numManifolds-1;i>=0;i--)
-	{
-		btPersistentManifold* contactManifold =  m_dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
-		
-		m_dynamicsWorld->getDispatcher()->clearManifold(contactManifold);
-//		m_dynamicsWorld->getDispatcher()->releaseManifold(contactManifold);
-	}
-*/
-/*
-	m_dynamicsWorld->getCollisionWorld()->updateAabbs();
-
-	m_dynamicsWorld->getBroadphase()->resetPool( m_dynamicsWorld->getDispatcher() );
-	m_dynamicsWorld->getBroadphase()->calculateOverlappingPairs( m_dynamicsWorld->getDispatcher() );
-
-
-	m_dynamicsWorld->computeOverlappingPairs();
-*/
-}
- 
-
 
 
 void BWorld::addFloor()

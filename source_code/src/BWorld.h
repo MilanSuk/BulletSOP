@@ -108,7 +108,6 @@ public:
 	void convert_parent_to_parent(BRigidBody* body, BRigidBody* compound);
 
 	void cleanCollisionWithDeformBody(BRigidBody* body);	//clears pair in our world(needs to be call after updating points in deform body)
-	void cleanCollision();
 
 	void addFloor();
 	void removeFloor();
