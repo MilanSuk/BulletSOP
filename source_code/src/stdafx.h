@@ -165,6 +165,37 @@ public:
 		return m_data[i];
 	}
 
+	T& get(int i) const
+	{
+		return m_data[i];
+	}
+
+
+	bool find(T v) const
+	{
+		for(int i=0; i < m_data_size; i++)
+			if(m_data[i]==v)
+				return true;
+		return false;
+	}
+
+	bool find(T v1, T v2) const
+	{
+		bool find1, find2;
+		find1 = find2 = false;
+		for(int i=0; i < m_data_size; i++)
+		{
+			if( m_data[i]==v1 )
+				find1 = true;
+
+			if( m_data[i]==v2 )
+				find2 = true;
+
+			if(find1 && find2)
+				return true;
+		}
+		return false;
+	}
 
 private:
 	void copyIt(const MyVec& v)
