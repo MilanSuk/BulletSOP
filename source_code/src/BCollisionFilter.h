@@ -18,17 +18,26 @@ class BCollisionFilter : public btOverlapFilterCallback
 {
 private:
 	btDiscreteDynamicsWorld* m_dynamicsWorld;
-	MyVec< MyVec<btBroadphaseProxy*> > m_groups;
+	MyVec< MyVec<btBroadphaseProxy*>* > m_groups;	//objects in group collide only between each other
+	MyVec< MyVec<btBroadphaseProxy*>* > m_ignore_groups;	//objects in group don't collide
+
 	bool m_collisionsOn;
 
 public:
 	BCollisionFilter(btDiscreteDynamicsWorld* dynamicsWorld);
 	virtual ~BCollisionFilter(void);
 
+	void clearGroups();
+	void clearIgnoreGroups();
+	void run(bool on);	///Turns on or off collision detections
+
 	int addGroup();		///Adds group and index of group
 	void addProxy(int group_i, btBroadphaseProxy* proxies);		///Adds body to group
-	void clear();
-	void run(bool on);	///Turns on or off collision detections
+
+	int addIgnoreGroup();		///Adds group and index of group
+	void addIgnoreProxy(int group_i, btBroadphaseProxy* proxies);		///Adds body to group
+
+	void optimizeIgnoreGroups();
 
 	virtual bool needBroadphaseCollision(btBroadphaseProxy* proxy0, btBroadphaseProxy* proxy1) const;	///This virtual function is called from Bullet Library
 };

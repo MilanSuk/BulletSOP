@@ -13,6 +13,7 @@ This notice may not be removed or altered from any source distribution.
 BCollisionFilter::BCollisionFilter(btDiscreteDynamicsWorld* dynamicsWorld)
 {
 	m_groups.setExtraAlloc(EXTRA_ALLOC);
+	m_ignore_groups.setExtraAlloc(EXTRA_ALLOC);
 
 	m_collisionsOn = true;
 	m_dynamicsWorld = dynamicsWorld;
@@ -21,6 +22,12 @@ BCollisionFilter::BCollisionFilter(btDiscreteDynamicsWorld* dynamicsWorld)
 
 BCollisionFilter::~BCollisionFilter(void)
 {
+	for(int i = 0; i < m_groups.size(); ++i)
+		delete m_groups[i];
+
+	for(int i = 0; i < m_ignore_groups.size(); ++i)
+		delete m_ignore_groups[i];
+
 	m_dynamicsWorld->getPairCache()->setOverlapFilterCallback(0);
 }
 
@@ -31,27 +38,83 @@ void BCollisionFilter::run(bool on)
 	m_collisionsOn = on;
 }
 
+void BCollisionFilter::clearGroups()
+{
+	m_groups.resize(0);	
+}
+void BCollisionFilter::clearIgnoreGroups()
+{
+	m_ignore_groups.resize(0);	
+}
+
 
 int BCollisionFilter::addGroup()
 {
-	MyVec<btBroadphaseProxy*> v;
-	m_groups.push_back(v);
+	m_groups.push_back( new MyVec<btBroadphaseProxy*>() );
 
-	//printf("addGroup: %d\n", m_groups.size());
-	return (int)m_groups.size()-1;
+	const size_t N = m_groups.size();
+	return (int)N-1;
 }
-
 
 void BCollisionFilter::addProxy(int group_i, btBroadphaseProxy* proxies)
 {
-	m_groups[group_i].push_back(proxies);
+	m_groups[group_i]->push_back(proxies);
 }
 
-void BCollisionFilter::clear()
+
+int BCollisionFilter::addIgnoreGroup()
 {
-	m_groups.clear();
+	m_ignore_groups.push_back( new MyVec<btBroadphaseProxy*>() );
+
+	const size_t N = m_ignore_groups.size();
+	return (int)N-1;
 }
 
+void BCollisionFilter::addIgnoreProxy(int group_i, btBroadphaseProxy* proxies)
+{
+	m_ignore_groups[group_i]->push_back(proxies);
+}
+
+
+void BCollisionFilter::optimizeIgnoreGroups()
+{
+	for(int i = 0; i < m_ignore_groups.size(); i++)
+	{
+		const size_t N = m_ignore_groups[i]->size();
+
+		if(N < 2)
+		{
+			delete m_ignore_groups[i];
+			m_ignore_groups.erase(i);
+			i--;
+			continue;
+		}
+
+		for(int ii = i+1; ii < m_ignore_groups.size(); ii++)
+		{
+			if(N==m_ignore_groups[ii]->size())	//same group size!
+			{
+				bool find_duplicate = true;
+				for(int j = 0; j < N; j++)
+				{
+					if(!m_ignore_groups[ii]->find(m_ignore_groups[i]->get(j)))
+					{
+						find_duplicate = false;
+						break;
+					}
+				}
+
+				if(find_duplicate)
+				{
+					delete m_ignore_groups[ii];
+					m_ignore_groups.erase(ii);
+					ii--;
+				}
+			}
+		}
+	}
+
+}
 
 
 bool BCollisionFilter::needBroadphaseCollision(btBroadphaseProxy* proxy0, btBroadphaseProxy* proxy1) const
@@ -59,29 +122,28 @@ bool BCollisionFilter::needBroadphaseCollision(btBroadphaseProxy* proxy0, btBroa
 	if(!m_collisionsOn)		//don't compute collisions
 		return false;
 
-	if(!m_groups.size())	//empty => compute all collisions
-		return true;
 
-	for(int i = 0; i < m_groups.size(); i++)
+	if(m_ignore_groups.size())
 	{
-		bool find_a = false;
-		bool find_b = false;
-
-		//try to find one group which includes both bodies
-		for(int j = 0; j < m_groups[i].size(); j++)
+		for(int i = 0; i < m_ignore_groups.size(); i++)
 		{
-			if( m_groups[i][j]==proxy0 )
-				find_a = true;
-
-			if( m_groups[i][j]==proxy1 )
-				find_b = true;
-
-			if(find_a && find_b)
-				return true;	//return true when pairs need collision
+			if(m_ignore_groups[i]->find(proxy0, proxy1))
+				return false;
 		}
 	}
 
-	return false;
+	if(m_groups.size())
+	{
+		for(int i = 0; i < m_groups.size(); i++)
+		{
+			if(m_groups[i]->find(proxy0, proxy1))
+				return true;	//return true when pairs need collision
+		}
+		return false;
+	}
+
+
+	return true;
 }
 
 
