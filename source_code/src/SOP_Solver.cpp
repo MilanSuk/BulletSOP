@@ -360,6 +360,9 @@ void SOP_Solver::updateIgnoreCollisionGroups()
 	BCollisionFilter* cf = m_bullet->getCollisionFilter();
 	cf->clearIgnoreGroups();
 
+	if(!m_input_const)
+		return;
+
 	SConstraint cstr;
 	cstr.initFind(&m_boss, m_input_const);
 
