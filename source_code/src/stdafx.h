@@ -67,7 +67,7 @@ public:
 
 	MyVec(const MyVec& v)
 	{
-		clear();
+		//clear();
 		copyIt(v);
 	}
 
