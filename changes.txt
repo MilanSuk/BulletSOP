@@ -56,3 +56,9 @@
 * Fixed: Removing item from vector
 
 
+2.0.14
+* Added: Constraint "collision" option, which can disable collision between constraint objects
+
+
+
+

@@ -42,6 +42,11 @@ This notice may not be removed or altered from any source distribution.
 ECleanBullets g_cleanbullets;	//holds all worlds which are deleted in separ threads
 
 
+#define TOLER 0.1f
+btVector3 BWorld::s_TOLER_VEC(TOLER, TOLER, TOLER);
+float BWorld::s_TOLER = TOLER;
+
+
 BWorld::BWorld(
 	bool deleteThread,
 	bool share_shapes,
@@ -263,7 +268,7 @@ void BWorld::addCollisionShape(btCollisionShape* sh)
 	m_shapes.push_back(sh);	
 }
 
-btCollisionShape* BWorld::findBoxShape(btVector3 s)
+btCollisionShape* BWorld::findBoxShape(btVector3 s) const
 {
 	if(!m_share_shapes)
 		return 0;
@@ -274,14 +279,14 @@ btCollisionShape* BWorld::findBoxShape(btVector3 s)
 		{
 			btBoxShape* sh = static_cast<btBoxShape*>(m_shapes[i]);
 
-			if(sh->getHalfExtentsWithMargin()==s)
+			if(insideVector(sh->getHalfExtentsWithMargin(), s, s_TOLER_VEC))
 				return sh;
 		}
 	}
 	return 0;
 }
 
-btCollisionShape* BWorld::findSphereShape(float rad)
+btCollisionShape* BWorld::findSphereShape(float rad) const
 {
 	if(!m_share_shapes)
 		return 0;
@@ -292,14 +297,31 @@ btCollisionShape* BWorld::findSphereShape(float rad)
 		{
 			btSphereShape* sh = static_cast<btSphereShape*>(m_shapes[i]);
 
-			if(sh->getRadius()==rad)
+			if(	sh->getRadius() > rad-s_TOLER &&
+				sh->getRadius() < rad+s_TOLER)
 				return sh;
 		}
 	}
 	return 0;
 }
 
+btCollisionShape* BWorld::findCylinderShape(btVector3 s) const
+{
+	if(!m_share_shapes)
+		return 0;
 
+	for(int i=0; i < m_shapes.size(); i++)
+	{
+		if(m_shapes[i]->getShapeType()==CYLINDER_SHAPE_PROXYTYPE)
+		{
+			btCylinderShape* sh = static_cast<btCylinderShape*>(m_shapes[i]);
+
+			if(insideVector(sh->getHalfExtentsWithMargin(), s, s_TOLER_VEC))
+				return sh;
+		}
+	}
+	return 0;
+}
 
 
 
@@ -345,8 +367,13 @@ BRigidBody* BWorld::addCone(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 co
 
 BRigidBody* BWorld::addCylinder(int index, UT_Vector3 t, UT_Vector3 r, UT_Vector3 cog_r, float rad, float h, BRigidBody* compound)
 {
-	btCollisionShape* shape = new btCylinderShape( btVector3(rad, h*0.5f, rad));
-	addCollisionShape(shape);
+	btVector3 half_box_size(rad, h*0.5f, rad);
+	btCollisionShape* shape = findCylinderShape(half_box_size);
+	if(!shape)
+	{
+		shape = new btCylinderShape(half_box_size);
+		addCollisionShape(shape);
+	}
 	BRigidBody* body = addRigidObject(SOP_Build::TYPE_CYLINDER, shape, index, t, r, cog_r, compound);
 	return body;
 }

@@ -48,6 +48,9 @@ private:
 	btAlignedObjectArray<btCollisionShape*> m_shapes;
 	bool m_share_shapes;
 
+	static btVector3 s_TOLER_VEC;
+	static float s_TOLER;
+
 public:
 	BWorld(	bool deleteThread,
 			bool share_shapes,
@@ -115,8 +118,9 @@ public:
 
 	void addCollisionShape(btCollisionShape* sh);
 
-	btCollisionShape* findBoxShape(btVector3 size);
-	btCollisionShape* findSphereShape(float rad);
+	btCollisionShape* findBoxShape(btVector3 size) const;
+	btCollisionShape* findSphereShape(float rad) const;
+	btCollisionShape* findCylinderShape(btVector3 s) const;
 
 
 private:
@@ -150,3 +154,12 @@ inline btVector3 get_bullet_V3(UT_Vector3 v)
 	return btVector3(v[0], v[1], v[2]);
 }
 
+///check If "a" is inside "b" with toler
+inline bool insideVector(btVector3 a, btVector3 b, btVector3 tolerB)
+{
+	btVector3 bmin = b-tolerB;
+	btVector3 bmax = b+tolerB;
+
+	return	a[0] > bmin[0] && a[1] > bmin[1] && a[2] > bmin[2] &&
+			a[0] < bmax[0] && a[1] < bmax[1] && a[2] < bmax[2];
+}
