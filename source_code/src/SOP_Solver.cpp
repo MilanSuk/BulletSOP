@@ -550,6 +550,42 @@ void SOP_Solver::updateConstraints()
 }
 
 
+void SOP_Solver::disableCompoundConstraints()
+{
+	BOSS_START;
+
+	SConstraint cstr;
+	cstr.initFind(&m_boss, m_input_const);
+
+	GEO_Primitive* prim;
+	int i=0;
+	int num_prims = (int)m_input_const->getPrimitiveMap().indexSize();
+	GA_FOR_ALL_PRIMITIVES(m_input_const, prim)	//iterate over all primitives(constraints)
+	{
+		GA_Offset primoff = prim->getMapOffset();
+
+		
+		BRigidBody* bodyA = m_bullet->getBody(cstr.getIndexA(primoff));
+		BRigidBody* bodyB = m_bullet->getBody(cstr.getIndexB(primoff));
+
+		if(bodyA && bodyB)
+		{
+			BConstraint* c = m_bullet->getConstraints(cstr.getIndex(primoff), bodyA, bodyB);
+			if(c)
+			{
+				BRigidBody* bcA = bodyA->getCompound();
+				BRigidBody* bcB = bodyB->getCompound();
+				c->setEnabled((!bcA && !bcB) || bcA != bcB);	//both NULL or different
+			}
+		}
+		BOSS_INTERRUPT(i, num_prims);
+		i++;
+	}
+
+	BOSS_END;
+}
+
+
 
 void SOP_Solver::updateForces()
 {
@@ -850,6 +886,7 @@ void SOP_Solver::step()
 	//update
 	updateObjects();
 	updateConstraints();
+	disableCompoundConstraints();
 	updateCollisionGroups();
 	updateIgnoreCollisionGroups();
 

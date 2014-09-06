@@ -61,8 +61,9 @@ private:
 
 	void updateObjects();
 	void updateObjectsProperties(SObject &o, bool updateOnlyCompound);
-	void updateConstraints();
 	void updateConstr(SConstraint* cstr, GEO_Primitive* prim);
+	void updateConstraints();
+	void disableCompoundConstraints();
 	void updateForces();
 	void updateCollisionGroups();
 	void updateIgnoreCollisionGroups();
