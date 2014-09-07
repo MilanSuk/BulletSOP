@@ -552,6 +552,9 @@ void SOP_Solver::updateConstraints()
 
 void SOP_Solver::disableCompoundConstraints()
 {
+	if(!m_input_const)
+		return;
+
 	BOSS_START;
 
 	SConstraint cstr;
