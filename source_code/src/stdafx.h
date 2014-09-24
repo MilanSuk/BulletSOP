@@ -40,10 +40,10 @@ This notice may not be removed or altered from any source distribution.
 #define RAD_TO_DEG 57.2957795f		//57.295779513082320876798154814105
 #define DEG_TO_RAD 0.0174532925f	//0.01745329251994329576923690768489
 
-#define TOOL_NAME "BulletSOP 2.0.11"
+#define TOOL_NAME "BulletSOP 2.0.14"
 
 #define EXTRA_ALLOC 10000
-#define EXTRA_ALLOC_SMALL 10
+#define EXTRA_ALLOC_SMALL 100
 
 
 template<typename T>
@@ -107,7 +107,8 @@ public:
 
 	size_t resize(size_t size)	///returns old size
 	{
-		reserve(size + m_extra_alloc);
+		if(size > m_data_size_alloc)
+			reserve(size + m_extra_alloc);
 
 		size_t old_size = m_data_size;
 		m_data_size = size;
