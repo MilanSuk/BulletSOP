@@ -134,7 +134,7 @@ UT_Vector3 BRigidBody::getPointVelocity(UT_Vector3 world_t) const
 }
 
 
-void BRigidBody::setBodyTransform(UT_Vector3 t, UT_Vector3 r)
+void BRigidBody::setStaticBodyTransform(UT_Vector3 t, UT_Vector3 r)
 {
 	if(!isStaticOrKinematicObject())
 		return;
@@ -151,6 +151,23 @@ void BRigidBody::setBodyTransform(UT_Vector3 t, UT_Vector3 r)
 	//save new current
 	setPosCurrent(bt);
 	setRotCurrent(br);
+}
+
+
+void BRigidBody::setDynamicBodyTransform(UT_Vector3 t, UT_Vector3 r)
+{
+	if(isStaticOrKinematicObject())
+		return;
+
+	btTransform transform;
+	transform.setIdentity();
+	transform.setOrigin( get_bullet_V3(t) );
+
+	btQuaternion br;
+	br.setEulerZYX(r[2], r[1], r[0]);
+	transform.setRotation(br);
+
+	setWorldTransform(transform);
 }
 
 

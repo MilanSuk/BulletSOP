@@ -799,7 +799,9 @@ void SOP_Solver::updateObjectsProperties(SObject &o, bool updateOnlyCompound)
 		body->setSleeping( o.getSleeping(ptoff) );
 
 		if(mass <= 0)
-			body->setBodyTransform(t, r);	//must be after calling setMass()
+			body->setStaticBodyTransform(t, r);	//must be after calling setMass()
+		//else
+		//	body->setDynamicBodyTransform(t, r);	//needs to be tested for speed!!!
 
 		body->setUpdate(true);
 		body->setLine(i);

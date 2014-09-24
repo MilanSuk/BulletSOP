@@ -79,7 +79,8 @@ public:
 	void setAngVelocity(UT_Vector3 av);
 	void setCollisionMargin(float colmargin);
 	void setSleeping(bool sleep);
-	void setBodyTransform(UT_Vector3 t, UT_Vector3 r);
+	void setStaticBodyTransform(UT_Vector3 t, UT_Vector3 r);
+	void setDynamicBodyTransform(UT_Vector3 t, UT_Vector3 r);
 	void setForce(UT_Vector3 world_pos, UT_Vector3 force, int type);
 	void clearMyForces();
 	void uploadMyForces();
