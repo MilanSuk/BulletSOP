@@ -58,7 +58,9 @@
 
 2.0.14
 * Added: Constraint "collision" option, which can disable collision between constraint objects
-
-
+* Fixed: Crash when scene is without constraint input
+* Fixed: Violation of Houdini Boss block
+* Fixed: Vector resize()
+* Added: Change pos and rot for dynamic bodies
 
 

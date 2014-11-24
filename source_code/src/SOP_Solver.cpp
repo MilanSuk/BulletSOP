@@ -800,8 +800,8 @@ void SOP_Solver::updateObjectsProperties(SObject &o, bool updateOnlyCompound)
 
 		if(mass <= 0)
 			body->setStaticBodyTransform(t, r);	//must be after calling setMass()
-		//else
-		//	body->setDynamicBodyTransform(t, r);	//needs to be tested for speed!!!
+		else
+			body->setDynamicBodyTransform(t, r);	//needs to be tested for speed!!!
 
 		body->setUpdate(true);
 		body->setLine(i);
