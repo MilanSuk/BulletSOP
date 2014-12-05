@@ -34,7 +34,11 @@ OP_ERROR SOP_ExtraCells::cookMySop(OP_Context &context)
 		UT_String attr_name;
 		ATTRIBUTE_NAME(attr_name);
 		GA_RWHandleI attr = SHelper::findPrimitiveAttrI(gdp, attr_name);
-
+		if(!attr.isValid())
+		{
+			char t[255];	sprintf(t, "2nd input hasn't '%s' attribute", attr_name.buffer());
+			THROW_SOP(t, NULL);
+		}
 
 		GEO_Primitive* prim;
 
