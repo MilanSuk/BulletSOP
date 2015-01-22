@@ -37,11 +37,11 @@ bool SHelper::isInit() const
 
 GA_RWHandleI SHelper::addIntPointAttr(GU_Detail* gdp, const char* name, int size, int def)
 {
-	return GA_RWHandleI( gdp->addIntTuple(GA_ATTRIB_POINT, name, size, GA_Defaults(def)).getAttribute() );
+	return GA_RWHandleI( gdp->addIntTuple(GA_ATTRIB_POINT, name, size, GA_Defaults(def))/*.getAttribute()*/ );
 }
 GA_RWHandleF SHelper::addFloatPointAttr(GU_Detail* gdp, const char* name, int size, float def)
 {
-	return GA_RWHandleF( gdp->addFloatTuple(GA_ATTRIB_POINT, name, size, GA_Defaults(def)).getAttribute() );
+	return GA_RWHandleF( gdp->addFloatTuple(GA_ATTRIB_POINT, name, size, GA_Defaults(def))/*.getAttribute()*/ );
 }
 GA_RWHandleV3 SHelper::addFloatVectorPointAttr(GU_Detail* gdp, const char* name, float* def)
 {
@@ -57,11 +57,11 @@ GA_RWHandleV3 SHelper::addFloatVectorPointAttr(GU_Detail* gdp, const char* name,
 
 GA_RWHandleI SHelper::addIntPrimitiveAttr(GU_Detail* gdp, const char* name, int size, int def)
 {
-	return GA_RWHandleI( gdp->addIntTuple(GA_ATTRIB_PRIMITIVE, name, size, GA_Defaults(def)).getAttribute() );
+	return GA_RWHandleI( gdp->addIntTuple(GA_ATTRIB_PRIMITIVE, name, size, GA_Defaults(def))/*.getAttribute()*/ );
 }
 GA_RWHandleF SHelper::addFloatPrimitiveAttr(GU_Detail* gdp, const char* name, int size, float def)
 {
-	return GA_RWHandleF( gdp->addFloatTuple(GA_ATTRIB_PRIMITIVE, name, size, GA_Defaults(def)).getAttribute() );
+	return GA_RWHandleF( gdp->addFloatTuple(GA_ATTRIB_PRIMITIVE, name, size, GA_Defaults(def))/*.getAttribute()*/ );
 }
 GA_RWHandleV3 SHelper::addFloatVectorPrimitiveAttr(GU_Detail* gdp, const char* name, float* def)
 {
@@ -77,11 +77,11 @@ GA_RWHandleV3 SHelper::addFloatVectorPrimitiveAttr(GU_Detail* gdp, const char* n
 
 GA_RWHandleI SHelper::addIntDetailAttr(GU_Detail* gdp, const char* name, int size, int def)
 {
-	return GA_RWHandleI( gdp->addIntTuple(GA_ATTRIB_GLOBAL, name, size, GA_Defaults(def)).getAttribute() );
+	return GA_RWHandleI( gdp->addIntTuple(GA_ATTRIB_GLOBAL, name, size, GA_Defaults(def))/*.getAttribute()*/ );
 }
 GA_RWHandleF SHelper::addFloatDetailAttr(GU_Detail* gdp, const char* name, int size, float def)
 {
-	return GA_RWHandleF( gdp->addFloatTuple(GA_ATTRIB_GLOBAL, name, size, GA_Defaults(def)).getAttribute() );
+	return GA_RWHandleF( gdp->addFloatTuple(GA_ATTRIB_GLOBAL, name, size, GA_Defaults(def))/*.getAttribute()*/ );
 }
 GA_RWHandleV3 SHelper::addFloatVectorDetailAttr(GU_Detail* gdp, const char* name, float* def)
 {
@@ -97,42 +97,42 @@ GA_RWHandleV3 SHelper::addFloatVectorDetailAttr(GU_Detail* gdp, const char* name
 
 GA_RWHandleI SHelper::findPointAttrI(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleI( gdp->findPointAttribute(name).getAttribute() );
+	return GA_RWHandleI( gdp->findPointAttribute(name)/*.getAttribute()*/ );
 }
 GA_RWHandleF SHelper::findPointAttrF(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleF( gdp->findPointAttribute(name).getAttribute() );
+	return GA_RWHandleF( gdp->findPointAttribute(name)/*.getAttribute()*/ );
 }
 GA_RWHandleV3 SHelper::findPointAttrV3(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleV3( gdp->findPointAttribute(name).getAttribute() );
+	return GA_RWHandleV3( gdp->findPointAttribute(name)/*.getAttribute()*/ );
 }
 
 
 GA_RWHandleI SHelper::findPrimitiveAttrI(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleI( gdp->findPrimitiveAttribute(name).getAttribute() );
+	return GA_RWHandleI( gdp->findPrimitiveAttribute(name)/*.getAttribute()*/ );
 }
 GA_RWHandleF SHelper::findPrimitiveAttrF(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleF( gdp->findPrimitiveAttribute(name).getAttribute() );
+	return GA_RWHandleF( gdp->findPrimitiveAttribute(name)/*.getAttribute()*/ );
 }
 GA_RWHandleV3 SHelper::findPrimitiveAttrV3(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleV3( gdp->findPrimitiveAttribute(name).getAttribute() );
+	return GA_RWHandleV3( gdp->findPrimitiveAttribute(name)/*.getAttribute()*/ );
 }
 
 
 GA_RWHandleI SHelper::findDetailAttrI(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleI( gdp->findGlobalAttribute(name).getAttribute() );
+	return GA_RWHandleI( gdp->findGlobalAttribute(name)/*.getAttribute()*/ );
 }
 GA_RWHandleF SHelper::findDetailAttrF(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleF( gdp->findGlobalAttribute(name).getAttribute() );
+	return GA_RWHandleF( gdp->findGlobalAttribute(name)/*.getAttribute()*/ );
 }
 GA_RWHandleV3 SHelper::findDetailAttrV3(GU_Detail* gdp, const char* name)
 {
-	return GA_RWHandleV3( gdp->findGlobalAttribute(name).getAttribute() );
+	return GA_RWHandleV3( gdp->findGlobalAttribute(name)/*.getAttribute()*/ );
 }
 

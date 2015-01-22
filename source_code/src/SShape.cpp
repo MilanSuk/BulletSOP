@@ -978,7 +978,7 @@ void SShape::deleteHigh()
 	BOSSP_START;
 
 	//delete primitives
-	GEO_PrimitivePtrArray delArray;
+	UT_Array<GEO_Primitive*> delArray;	//GEO_PrimitivePtrArray delArray;
 	GEO_Primitive* prim;
 	GA_FOR_ALL_PRIMITIVES(m_gdp, prim)
 	{
@@ -1017,7 +1017,7 @@ void SShape::deleteLow()
 	BOSSP_START;
 
 	//delete primitives
-	GEO_PrimitivePtrArray delArray;
+	UT_Array<GEO_Primitive*> delArray;	//GEO_PrimitivePtrArray delArray;
 	GEO_Primitive* prim;
 	GA_FOR_ALL_PRIMITIVES(m_gdp, prim)
 	{
@@ -1058,7 +1058,7 @@ void SShape::deleteSubCompund()
 	if(hasCompoundIndexAttr())
 	{
 		//delete primitives
-		GEO_PrimitivePtrArray delArray;
+		UT_Array<GEO_Primitive*> delArray;	//GEO_PrimitivePtrArray delArray;
 		GEO_Primitive* prim;
 		GA_FOR_ALL_PRIMITIVES(m_gdp, prim)
 		{

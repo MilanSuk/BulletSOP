@@ -409,7 +409,7 @@ void SOP_Solver::setOutputConstraint(GU_Detail* gout)
 	cstr.initFind(&m_boss, gout);
 
 
-	GEO_PrimitivePtrArray arr;
+	UT_Array<GEO_Primitive*> arr;	//GEO_PrimitivePtrArray arr;
 	int i=0;
 	int num_prims = (int)gout->getPrimitiveMap().indexSize();
 	GEO_Primitive* prim;

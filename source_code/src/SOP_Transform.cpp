@@ -120,8 +120,8 @@ void SOP_Transform::extractEmitPoly(int act_frame)
 	emit.initFind(&m_boss, gdp);
 
 	const int age = EXTRACT_EMIT_POLY_MAX_AGE();
-
-	GEO_PrimitivePtrArray delArray;
+	
+	UT_Array<GEO_Primitive*> delArray;	//GEO_PrimitivePtrArray delArray;
 	GEO_Primitive* prim;
 	GA_FOR_ALL_PRIMITIVES(gdp, prim)
 	{
@@ -251,7 +251,7 @@ void SOP_Transform::deleteUnused(SShape* shape)
 {
 	BOSS_START;
 
-	GEO_PrimitivePtrArray delArray;
+	UT_Array<GEO_Primitive*> delArray;	//GEO_PrimitivePtrArray delArray;
 	GEO_Primitive* prim;
 	GA_FOR_ALL_PRIMITIVES(gdp, prim)
 	{
@@ -295,7 +295,7 @@ void SOP_Transform::deletePreferHigh(SShape* shape)
 	}
 
 	//deleting primitives
-	GEO_PrimitivePtrArray delArray;
+	UT_Array<GEO_Primitive*> delArray;	//GEO_PrimitivePtrArray delArray;
 	GA_FOR_ALL_PRIMITIVES(gdp, prim)
 	{
 		int index = shape->getPrimitiveIndex(prim->getMapOffset());

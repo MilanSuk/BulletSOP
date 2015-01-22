@@ -185,7 +185,7 @@ void SConstraint::deleteDuplicity(const GA_PrimitiveGroup* myGroupPr)
 	}
 
 	//add duplicity constraints(primitives) to array
-	GEO_PrimitivePtrArray arr;
+	UT_Array<GEO_Primitive*> arr;	//GEO_PrimitivePtrArray arr;
 	const int N = (int)pairs.size();
 	for(int i=0; i < N; i++)
 	{

@@ -76,7 +76,7 @@ OP_ERROR SOP_ExtraCells::cookMySop(OP_Context &context)
 		UT_String group_name;
 		GROUP_NAME(group_name);
 
-		GEO_PrimitivePtrArray arr;
+		UT_Array<GEO_Primitive*> arr;	//GEO_PrimitivePtrArray arr;
 		for(int i=0; i < objs.size(); i++)
 		{
 			if(	objs[i].i1.size()==0 ||
