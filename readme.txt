@@ -1,3 +1,5 @@
+BulletSOP is plugin used for making first class hollywood visual effects for movies like Chappie(by Image-engine), San Andreas(by MethodStudios) and others. BulletSOP is implementation of Bullet library inside SideFx Houdini. It's a plugin for creating incredibly large rigid body simulations on average PC. The tool is very powerful, flexible and speed is very impressive as well as memory footprint.
+
 1. Installation
 
 1.1 Plugin
